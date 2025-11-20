@@ -1,0 +1,26 @@
+.placeholder-card {
+  background-color: white;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #E0E0E0;
+}
+
+.placeholder-card-small {
+  min-height: 80px;
+}
+
+.placeholder-card-medium {
+  min-height: 100px;
+}
+
+.placeholder-card-large {
+  min-height: 180px;
+}
+
+.placeholder-x {
+  font-size: 2rem;
+  color: #CCC;
+  font-weight: 300;
+}
