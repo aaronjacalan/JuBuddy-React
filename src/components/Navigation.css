@@ -1,0 +1,99 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #E0E0E0;
+  }
+  
+  .logo-section {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    position: relative;
+  }
+  
+  .navigation {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 1.5rem;
+  }
+  
+  .nav-item {
+    color: #1B1B1B;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    transition: all 0.2s ease;
+    border: none;
+    background-color: #E8E8E8;
+    cursor: pointer;
+  }
+  
+  .nav-item.active {
+    background-color: #00BCD4;
+    color: white;
+  }
+  
+  .nav-item:not(.active):hover {
+    background-color: #D8D8D8;
+    color: #1B1B1B;
+  }
+  
+  .user-section {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .settings-btn {
+    background-color: #E8E8E8;
+    color: #1B1B1B;
+  }
+  
+  .profile-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #E8E8E8;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #1B1B1B;
+  }
+  
+  .profile-icon:hover {
+    background-color: #D8D8D8;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .header {
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1rem;
+    }
+    
+    .navigation {
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .nav-item {
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+    }
+  }
