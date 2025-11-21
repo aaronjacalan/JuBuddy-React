@@ -1,0 +1,143 @@
+.settings-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-layout {
+  display: flex;
+  flex: 1;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.settings-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(100vh - 4rem);
+}
+
+.settings-tab {
+  padding: 1rem 1.5rem;
+  background-color: #E8E8E8;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #000;
+  text-align: left;
+}
+
+.settings-tab:hover {
+  background-color: #D8D8D8;
+}
+
+.settings-tab.active {
+  background-color: #1a1a1a;
+  color: #00BCD4;
+}
+
+.settings-content {
+  flex: 1;
+  background-color: #F5F5F5;
+  border-radius: 20px;
+  padding: 2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  max-height: 100%;
+}
+
+.settings-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.settings-content::-webkit-scrollbar-track {
+  background: #E8E8E8;
+  border-radius: 4px;
+}
+
+.settings-content::-webkit-scrollbar-thumb {
+  background: #1a1a1a;
+  border-radius: 4px;
+}
+
+.settings-content::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
+
+.settings-sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.settings-sidebar::-webkit-scrollbar-track {
+  background: #E8E8E8;
+  border-radius: 4px;
+}
+
+.settings-sidebar::-webkit-scrollbar-thumb {
+  background: #1a1a1a;
+  border-radius: 4px;
+}
+
+.settings-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
+
+.settings-section {
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.settings-section:last-child {
+  margin-bottom: 0;
+}
+
+.settings-section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 1.5rem 0;
+}
+
+.settings-items {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .settings-layout {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .settings-sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+  
+  .settings-tab {
+    white-space: nowrap;
+    min-width: fit-content;
+  }
+  
+  .settings-content {
+    padding: 1.5rem;
+  }
+}
+

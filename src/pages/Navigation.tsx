@@ -50,16 +50,13 @@ function Navigation({ activeItem }: NavigationProps) {
       <div className="user-section">
         <Link 
           to="/settings" 
-          className={`nav-item settings-btn ${currentActive === 'Settings' ? 'active' : ''}`}
+          className={`profile-icon ${currentActive === 'Settings' ? 'active' : ''}`}
         >
-          Settings
-        </Link>
-        <div className="profile-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" fill="currentColor"/>
-            <path d="M12 14C7.58172 14 4 17.5817 4 22H20C20 17.5817 16.4183 14 12 14Z" fill="currentColor"/>
+            <path d="M12 15.5C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12C8.5 13.933 10.067 15.5 12 15.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M19.622 10.3954L18.5247 7.7448L20 6L18 4L16.2647 5.4829L13.5578 4.3698L12.9353 2H11.0647L10.4422 4.3698L7.73529 5.4829L6 4L4 6L5.47529 7.7448L4.37798 10.3954L2 11.2361L2 12.7639L4.37798 13.6046L5.47529 16.2552L4 18L6 20L7.73529 18.5171L10.4422 19.6302L11.0647 22H12.9353L13.5578 19.6302L16.2647 18.5171L18 20L20 18L18.5247 16.2552L19.622 13.6046L22 12.7639V11.2361L19.622 10.3954Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
-        </div>
+        </Link>
       </div>
     </header>
   );

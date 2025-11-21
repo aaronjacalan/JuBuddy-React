@@ -59,11 +59,6 @@
     gap: 1.5rem;
   }
   
-  .settings-btn {
-    background-color: #E8E8E8;
-    color: #1B1B1B;
-  }
-  
   .profile-icon {
     width: 55px;
     height: 55px;
@@ -75,10 +70,16 @@
     cursor: pointer;
     transition: all 0.2s ease;
     color: #1B1B1B;
+    text-decoration: none;
   }
   
   .profile-icon:hover {
     background-color: #D8D8D8;
+  }
+  
+  .profile-icon.active {
+    background-color: #00BCD4;
+    color: white;
   }
   
   /* Responsive design */

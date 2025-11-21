@@ -1,0 +1,56 @@
+.buddy-invite-card {
+  background-color: #d9d9d9;
+  border-radius: 15px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: background-color 0.2s;
+}
+
+.buddy-invite-card:hover {
+  background-color: #c0c0c0;
+}
+
+.buddy-invite-avatar {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+}
+
+.buddy-invite-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.buddy-invite-name {
+  color: #000;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.buddy-invite-username {
+  color: #666;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.invite-btn {
+  padding: 0.5rem 1.5rem;
+  background-color: #d9d9d9;
+  border: none;
+  border-radius: 25px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  color: #000;
+}
+
+.invite-btn:hover {
+  background-color: #b0b0b0;
+}
+

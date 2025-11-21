@@ -15,7 +15,7 @@ body {
 .app-outer-container {
   min-height: 100vh;
   background-color: #1B1B1B;
-  padding: .5rem;
+  padding: .75rem;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -25,7 +25,7 @@ body {
   width: 100%;
   max-width: 100%;
   background-color: #F5F5F5;
-  border-radius: 10px;
+  border-radius: 5px;
   overflow: hidden;
 }
 
