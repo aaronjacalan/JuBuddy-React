@@ -1,47 +1,40 @@
 .balance-card {
     background-color: #1a1a1a;
-    border-radius: 12px;
-    padding: 1.5rem;
-    color: white;
-    min-width: 280px;
-  }
-  
-  .balance-label {
-    font-size: 0.875rem;
-    color: #999;
-    margin-bottom: 0.5rem;
-    text-transform: lowercase;
-  }
-  
-  .balance-content {
+    border-radius: 20px;
+    padding: 2rem;
+    color: #fff;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 0.75rem;
   }
   
-  .peso-symbol {
-    font-size: 2rem;
-    color: #00BCD4;
-    font-weight: bold;
+  .balance-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    text-transform: lowercase;
   }
   
   .balance-amount {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: white;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
   }
   
-  @media (max-width: 768px) {
-    .balance-card {
-      min-width: 100%;
-      margin-top: 1rem;
-    }
-    
-    .balance-amount {
-      font-size: 2rem;
-    }
-    
-    .peso-symbol {
-      font-size: 1.5rem;
-    }
+  .peso-sign {
+    color: #00d9ff;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  
+  .balance-subtitle {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-top: 0.25rem;
   }

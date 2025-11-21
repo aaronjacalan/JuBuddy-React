@@ -1,6 +1,6 @@
 import Navigation from './Navigation';
-import BalanceCard from './BalanceCard';
-import PlaceholderCard from './PlaceholderCard';
+import BalanceCard from '../components/BalanceCard';
+import PlaceholderCard from '../components/PlaceholderCard';
 import './Home.css';
 
 interface HomeProps {
