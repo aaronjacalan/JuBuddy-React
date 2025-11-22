@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import Navigation from './Navigation';
+import Navigation from '../components/Navigation';
 import SettingsItem from '../components/SettingsItem';
 import './Settings.css';
 

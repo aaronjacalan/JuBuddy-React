@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'DMSans';
+  src: url('../assets/DMSans_VariableFont.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
 .buddy-invite-card {
   background-color: #d9d9d9;
   border-radius: 15px;
@@ -6,6 +13,7 @@
   align-items: center;
   gap: 1rem;
   transition: background-color 0.2s;
+  font-family: 'DMSans', sans-serif;
 }
 
 .buddy-invite-card:hover {
@@ -30,12 +38,14 @@
   font-size: 1rem;
   font-weight: 700;
   margin: 0;
+  font-family: 'DMSans', sans-serif;
 }
 
 .buddy-invite-username {
   color: #666;
   font-size: 0.875rem;
   margin: 0;
+  font-family: 'DMSans', sans-serif;
 }
 
 .invite-btn {
@@ -48,6 +58,7 @@
   cursor: pointer;
   transition: background-color 0.2s;
   color: #000;
+  font-family: 'DMSans', sans-serif;
 }
 
 .invite-btn:hover {

@@ -4,6 +4,7 @@ import Transactions from './pages/Transactions'
 import VirtualJar from './pages/VirtualJar'
 import Goals from './pages/Goals'
 import Buddies from './pages/Buddies'
+import InviteBuddy from './pages/InviteBuddy'
 import Settings from './pages/Settings'
 import './App.css'
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/virtual-jar" element={<VirtualJar />} />
           <Route path="/goals" element={<Goals />} />
           <Route path="/buddies" element={<Buddies />} />
+          <Route path="/invite-buddy" element={<InviteBuddy />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>

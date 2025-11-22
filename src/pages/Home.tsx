@@ -1,4 +1,4 @@
-import Navigation from './Navigation';
+import Navigation from '../components/Navigation';
 import BalanceCard from '../components/BalanceCard';
 import PlaceholderCard from '../components/PlaceholderCard';
 import './Home.css';

@@ -1,0 +1,143 @@
+@font-face {
+  font-family: 'DMSans';
+  src: url('../assets/DMSans_VariableFont.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+.invite-buddy-container {
+  min-height: 100vh;
+  font-family: 'DMSans', sans-serif;
+}
+
+.invite-buddy-content {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.invite-header {
+  margin-bottom: 2rem;
+}
+
+.invite-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 1rem 0;
+  font-family: 'DMSans', sans-serif;
+}
+
+.invite-description {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+  font-family: 'DMSans', sans-serif;
+}
+
+.invite-search-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.invite-search-section .search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 300px;
+}
+
+.invite-search-section .search-input {
+  width: 100%;
+  padding: 1rem 2rem;
+  background-color: #d9d9d9;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  outline: none;
+  font-family: 'DMSans', sans-serif;
+}
+
+.invite-search-section .search-input::placeholder {
+  color: #666;
+}
+
+.invite-search-section .search-btn {
+  position: absolute;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+}
+
+.filter-btn {
+  padding: 0.875rem;
+  background-color: #1a1a1a;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.filter-btn:hover {
+  background-color: #333;
+}
+
+.buddies-invite-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.buddies-invite-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.buddies-invite-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.buddies-invite-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.buddies-invite-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+@media (max-width: 768px) {
+  .invite-buddy-content {
+    padding: 1rem;
+  }
+  
+  .invite-search-section {
+    flex-direction: column;
+  }
+  
+  .invite-search-section .search-container {
+    width: 100%;
+  }
+}
+

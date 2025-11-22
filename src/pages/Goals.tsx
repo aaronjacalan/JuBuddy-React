@@ -1,4 +1,4 @@
-import Navigation from './Navigation';
+import Navigation from '../components/Navigation';
 import PinnedGoalCard from '../components/PinnedGoalCard';
 import GoalCard from '../components/GoalCard';
 import './Goals.css';

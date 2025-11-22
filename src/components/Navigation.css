@@ -1,10 +1,17 @@
+@font-face {
+    font-family: 'DMSans';
+    src: url('../assets/DMSans_VariableFont.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
 .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 1.5rem 2rem;
-    background-color: #f5f5f5;
     border-bottom: 1px solid #E0E0E0;
+    font-family: 'DMSans', sans-serif;
   }
   
   .logo-section {
@@ -15,13 +22,15 @@
   .logo {
     background-color: #1a1a1a;
     color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 25px;
-    font-weight: bold;
-    font-size: 1.2rem;
+    padding: 0.75rem 3rem;
+    border-radius: 80px;
+    font-weight: bolder;
+    font-size: 1.5rem;
     position: relative;
     text-decoration: none;
     display: inline-block;
+    font-weight: bold;
+    font-family: 'DMSans', sans-serif;
   }
   
   .navigation {
@@ -29,27 +38,30 @@
     align-items: center;
     margin-left: auto;
     margin-right: 1.5rem;
+    background-color: #CDCDCD;
+    border-radius: 50px;
   }
   
   .nav-item {
     color: #1B1B1B;
     text-decoration: none;
     font-size: 1rem;
-    padding: 1rem 2rem;
+    padding: 1.25rem 2.25rem;
     border-radius: 50px;
     transition: all 0.2s ease;
     border: none;
-    background-color: #E8E8E8;
+    background-color: transparent;
     cursor: pointer;
+    font-weight: bold;
+    font-family: 'DMSans', sans-serif;
   }
   
   .nav-item.active {
-    background-color: #00BCD4;
-    color: white;
+    background-color: #1B1B1B;
+    color: #06D2CA;
   }
   
   .nav-item:not(.active):hover {
-    background-color: #D8D8D8;
     color: #1B1B1B;
   }
   
@@ -60,9 +72,9 @@
   }
   
   .profile-icon {
-    width: 55px;
-    height: 55px;
-    background-color: #E8E8E8;
+    width: 65px;
+    height: 65px;
+    background-color: #CDCDCD;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -74,12 +86,12 @@
   }
   
   .profile-icon:hover {
-    background-color: #D8D8D8;
+    background-color: #CDCDCD;
   }
   
   .profile-icon.active {
-    background-color: #00BCD4;
-    color: white;
+    background-color: #1B1B1B;
+    color: #06D2CA;
   }
   
   /* Responsive design */
