@@ -1,8 +1,12 @@
 @font-face {
     font-family: 'DMSans';
     src: url('../assets/DMSans_VariableFont.ttf') format('truetype');
-    font-weight: 100 900;
     font-style: normal;
+}
+
+@font-face {
+  font-family: LuckiestGuy;
+  src: url('../assets/LuckiestGuy.ttf') format(truetype);
 }
 
 .header {
@@ -10,7 +14,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 1.5rem 2rem;
-    border-bottom: 1px solid #E0E0E0;
+    border-bottom: 1px solid #CDCDCD;
     font-family: 'DMSans', sans-serif;
   }
   
@@ -21,16 +25,19 @@
   
   .logo {
     background-color: #1a1a1a;
-    color: white;
-    padding: 0.75rem 3rem;
+    padding: 0.6rem 3rem;
     border-radius: 80px;
-    font-weight: bolder;
-    font-size: 1.5rem;
-    position: relative;
+    font-size: 1.8rem;
+    font-weight: bold;
     text-decoration: none;
     display: inline-block;
-    font-weight: bold;
-    font-family: 'DMSans', sans-serif;
+    font-family: 'LuckiestGuy', sans-serif;
+  }
+
+  .logo-text {
+      background: linear-gradient(to right, white, #06D2CA);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
   }
   
   .navigation {
@@ -63,6 +70,7 @@
   
   .nav-item:not(.active):hover {
     color: #1B1B1B;
+    background-color: #b1b1b1;
   }
   
   .user-section {
@@ -86,7 +94,7 @@
   }
   
   .profile-icon:hover {
-    background-color: #CDCDCD;
+    background-color: #b1b1b1;
   }
   
   .profile-icon.active {
