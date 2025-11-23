@@ -1,9 +1,16 @@
+@font-face {
+  font-family: 'DMSans';
+  src: url('../assets/DMSans_VariableFont.ttf') format('truetype');
+  font-style: normal;
+}
+
 .settings-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1rem 0;
   border-bottom: 1px solid #e0e0e0;
+  font-family: 'DMSans', sans-serif;
 }
 
 .settings-item:last-child {
@@ -14,6 +21,7 @@
   color: #000;
   font-size: 1rem;
   flex: 1;
+  font-family: 'DMSans', sans-serif;
 }
 
 .settings-item-action {
