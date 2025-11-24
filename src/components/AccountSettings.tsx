@@ -43,7 +43,7 @@ function AccountSettings() {
               <input type="text" className="form-input" />
             </div>
             <div className="form-field">
-              <label className="form-label">Gmail</label>
+              <label className="form-label">Email Adress</label>
               <input type="email" className="form-input" />
             </div>
           </div>

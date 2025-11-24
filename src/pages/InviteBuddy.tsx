@@ -29,14 +29,14 @@ function InviteBuddy() {
               placeholder="search username"
               className="search-input"
             />
-            <button className="search-btn">
+            <button className="icon-btn search-btn">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
                 <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2"/>
               </svg>
             </button>
           </div>
-          <button className="filter-btn">
+          <button className="icon-btn filter-btn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path d="M3 6H21M6 12H18M9 18H15" stroke="currentColor" strokeWidth="2"/>
             </svg>

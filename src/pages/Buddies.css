@@ -47,9 +47,11 @@
 }
 
 .search-container {
-  position: relative;
+  flex: 1;
+  min-width: 280px;
   display: flex;
   align-items: center;
+  gap: 0.75rem;
 }
 
 .search-input {
@@ -59,7 +61,8 @@
   border-radius: 80px;
   font-size: 1rem;
   outline: none;
-  width: 38.3rem;
+  width: 100%;
+  flex: 1;
   font-family: 'DMSans', sans-serif;
 }
 
@@ -67,37 +70,29 @@
   color: #666;
 }
 
-.search-btn {
-  position: absolute;
-  right: 1rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #000;
-}
-
-.filter-btn {
-  padding: 0.875rem;
-  background-color: #1a1a1a;
-  border: none;
+.icon-btn {
+  width: 3rem;
+  height: 3rem;
+  flex: 0 0 3rem;
+  padding: 0;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  border: none;
+  background-color: #d9d9d9;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: background-color 0.3s;
   flex-shrink: 0;
-  color: #fff;
+  color: #000;
 }
 
-.filter-btn:hover {
-  background-color: #333;
+.icon-btn:hover {
+  background-color: #c5c5c5;
+}
+
+.search-icon-btn {
+  position: static;
 }
 
 .invite-buddy-btn {

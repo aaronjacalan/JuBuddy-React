@@ -8,19 +8,19 @@
   }
   
   .placeholder-card-small {
-    min-height: 80px;
+    min-height: 60px;
   }
   
   .placeholder-card-medium {
-    min-height: 100px;
+    min-height: 70px;
   }
   
   .placeholder-card-large {
-    min-height: 180px;
+    min-height: 140px;
   }
   
   .placeholder-x {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #CCC;
     font-weight: 300;
   }

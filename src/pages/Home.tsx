@@ -23,7 +23,7 @@ function Home({ firstname = 'Firstname', balance = 6213.45 }: HomeProps) {
           <div className="dashboard-column">
             <h2 className="column-title">pending tasks</h2>
             <div className="card-list">
-              {Array.from({ length: 5 }).map((_, index) => (
+              {Array.from({ length: 3 }).map((_, index) => (
                 <PlaceholderCard key={`task-${index}`} />
               ))}
             </div>
@@ -32,7 +32,7 @@ function Home({ firstname = 'Firstname', balance = 6213.45 }: HomeProps) {
           <div className="dashboard-column">
             <h2 className="column-title">recent expenses</h2>
             <div className="card-list">
-              {Array.from({ length: 5 }).map((_, index) => (
+              {Array.from({ length: 3 }).map((_, index) => (
                 <PlaceholderCard key={`expense-${index}`} />
               ))}
             </div>
