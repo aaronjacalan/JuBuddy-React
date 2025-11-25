@@ -11,10 +11,10 @@ function Goals() {
   ];
 
   const goals = [
-    { daysLeft: 999, progress: 60, goalName: 'goal name', goalDesc: 'goal desc' },
-    { daysLeft: 999, progress: 60, goalName: 'goal name', goalDesc: 'goal desc' },
-    { daysLeft: 999, progress: 60, goalName: 'goal name', goalDesc: 'goal desc' },
-    { daysLeft: 999, progress: 60, goalName: 'goal name', goalDesc: 'goal desc' }
+    { daysLeft: 60, progress: 90, goalName: 'goal name', goalDesc: 'goal desc' },
+    { daysLeft: 120, progress: 40, goalName: 'goal name', goalDesc: 'goal desc' },
+    { daysLeft: 420, progress: 69, goalName: 'goal name', goalDesc: 'goal desc' },
+    { daysLeft: 76, progress: 67, goalName: 'goal name', goalDesc: 'goal desc' }
   ];
 
   return (
@@ -23,7 +23,7 @@ function Goals() {
       
       <main className="goals-content">
         <div className="left-panel">
-          <h2 className="section-title">pinned goals</h2>
+          <h2 className="section-title">Pinned Goals</h2>
           <div className="pinned-goals-list">
             {pinnedGoals.map((goal, index) => (
               <PinnedGoalCard
@@ -37,16 +37,16 @@ function Goals() {
         </div>
         
         <div className="right-panel">
-          <div className="panel-header">
-            <button className="action-btn add-btn">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M8 3V13M3 8H13" stroke="currentColor" strokeWidth="2"/>
-              </svg>
-              add
-            </button>
-            
-            <div className="search-filter-section">
-              <div className="search-container">
+          <div className="panel-header goals-panel-header">
+            <div className="search-filter-section goals-search-controls">
+              <button className="action-btn add-btn goals-add-btn">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M8 3V13M3 8H13" stroke="currentColor" strokeWidth="2"/>
+                </svg>
+                add
+              </button>
+              
+              <div className="search-container goals-search-container">
                 <input 
                   type="text" 
                   placeholder="Search Goals"

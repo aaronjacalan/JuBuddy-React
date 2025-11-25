@@ -1,98 +1,98 @@
 @font-face {
-    font-family: 'DMSans';
-    src: url('../assets/DMSans_VariableFont.ttf') format('truetype');
-    font-style: normal;
+  font-family: 'DMSans';
+  src: url('../assets/DMSans_VariableFont.ttf') format('truetype');
+  font-style: normal;
 }
 
 @font-face {
-  font-family: LuckiestGuy;
-  src: url('../assets/LuckiestGuy.ttf') format(truetype);
+font-family: LuckiestGuy;
+src: url('../assets/LuckiestGuy.ttf') format(truetype);
 }
 
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.5rem 2rem;
-    border-bottom: 1px solid #CDCDCD;
-    font-family: 'DMSans', sans-serif;
-  }
-  
-  .logo-section {
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo {
-    background-color: #1a1a1a;
-    padding: 0.9rem 3rem;
-    border-radius: 80px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-decoration: none;
-    display: inline-block;
-    font-family: 'LuckiestGuy', sans-serif;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #CDCDCD;
+  font-family: 'DMSans', sans-serif;
+}
 
-  .logo-text {
-      background: linear-gradient(to right, white, #06D2CA);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-  }
-  
-  .navigation {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    margin-right: 1.5rem;
-    background-color: #CDCDCD;
-    border-radius: 50px;
-  }
-  
-  .nav-item {
-    color: #1B1B1B;
-    text-decoration: none;
-    font-size: 1rem;
-    padding: 1.25rem 2.25rem;
-    border-radius: 50px;
-    transition: all 0.2s ease;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    font-weight: bold;
-    font-family: 'DMSans', sans-serif;
-  }
-  
-  .nav-item.active {
-    background-color: #1B1B1B;
-    color: #06D2CA;
-  }
-  
-  .nav-item:not(.active):hover {
-    color: #1B1B1B;
-    background-color: #b1b1b1;
-  }
-  
-  .user-section {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-  }
-  
-  .profile-icon {
-    width: 60px;
-    height: 60px;
-    background-color: #CDCDCD;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    color: #1B1B1B;
-    text-decoration: none;
-  }
+.logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  background-color: #1a1a1a;
+  padding: 0.9rem 3rem;
+  border-radius: 80px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  font-family: 'LuckiestGuy', sans-serif;
+}
+
+.logo-text {
+    background: linear-gradient(to right, white, #06D2CA);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 1.5rem;
+  background-color: #CDCDCD;
+  border-radius: 50px;
+}
+
+.nav-item {
+  color: #1B1B1B;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 1.25rem 2.25rem;
+  border-radius: 50px;
+  transition: all 0.2s ease;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: 'DMSans', sans-serif;
+}
+
+.nav-item.active {
+  background-color: #1B1B1B;
+  color: #06D2CA;
+}
+
+.nav-item:not(.active):hover {
+  color: #1B1B1B;
+  background-color: #b1b1b1;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.profile-icon {
+  width: 60px;
+  height: 60px;
+  background-color: #CDCDCD;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #1B1B1B;
+  text-decoration: none;
+}
 
 .profile-icon-icon {
   width: 26px;
@@ -102,31 +102,30 @@
   -webkit-mask: url('../assets/settings.svg') center/contain no-repeat;
   mask: url('../assets/settings.svg') center/contain no-repeat;
 }
-  
-  .profile-icon:hover {
-    background-color: #b1b1b1;
+
+.profile-icon:hover {
+  background-color: #b1b1b1;
+}
+
+.profile-icon.active {
+  background-color: #1B1B1B;
+  color: #06D2CA;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
   }
   
-  .profile-icon.active {
-    background-color: #1B1B1B;
-    color: #06D2CA;
+  .navigation {
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
   
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .header {
-      flex-wrap: wrap;
-      gap: 1rem;
-      padding: 1rem;
-    }
-    
-    .navigation {
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-    
-    .nav-item {
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem;
-    }
+  .nav-item {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
   }
+}

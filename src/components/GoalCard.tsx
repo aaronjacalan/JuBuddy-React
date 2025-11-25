@@ -8,8 +8,8 @@ interface GoalCardProps {
 }
 
 function GoalCard({ 
-  daysLeft = 999, 
-  progress = 60, 
+  daysLeft = 0, 
+  progress = 0, 
   goalName = 'goal name', 
   goalDesc = 'goal desc' 
 }: GoalCardProps) {

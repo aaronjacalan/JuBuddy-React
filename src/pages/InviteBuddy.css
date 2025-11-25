@@ -68,7 +68,7 @@
   color: #666;
 }
 
-.icon-btn {
+.invite-search-section .icon-btn {
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -83,7 +83,7 @@
   color: #000;
 }
 
-.icon-btn:hover {
+.invite-search-section .icon-btn:hover {
   background-color: #c5c5c5;
 }
 

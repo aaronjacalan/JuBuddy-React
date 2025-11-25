@@ -1,4 +1,11 @@
-.goals-container {
+  @font-face {
+    font-family: 'DMSans';
+    src: url('../assets/DMSans_VariableFont.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  
+  .goals-container {
     min-height: 100vh;
   }
   
@@ -16,10 +23,11 @@
   }
   
   .section-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    color: #000;
+    font-size: 2rem;
+    font-weight: bolder;
+    color: #1a1a1a;
+    margin: 0;
+    font-family: 'DMSans', sans-serif;
   }
   
   .pinned-goals-list {
@@ -35,7 +43,7 @@
     gap: 1.5rem;
   }
   
-  .panel-header {
+.panel-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -46,8 +54,8 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background-color: #d9d9d9;
+    padding: 1rem 1.5rem;
+    background-color: #1a1a1a;
     border: none;
     border-radius: 25px;
     font-size: 1rem;
@@ -58,7 +66,8 @@
   }
   
   .action-btn:hover {
-    background-color: #c0c0c0;
+    background-color: #06D2CA;
+    color: #1a1a1a;
   }
   
   .action-btn svg {
@@ -66,14 +75,14 @@
     height: 16px;
   }
   
-  .search-filter-section {
+.search-filter-section {
     display: flex;
     gap: 1rem;
     align-items: center;
     margin-left: auto;
   }
   
-  .search-container {
+.search-container {
     flex: 1;
     position: relative;
     display: flex;
@@ -84,6 +93,7 @@
     width: 100%;
     padding: 0.875rem 3.5rem 0.875rem 1.5rem;
     background-color: #d9d9d9;
+    font-family: 'DMSans', sans-serif;
     border: none;
     border-radius: 25px;
     font-size: 1rem;
@@ -123,6 +133,29 @@
   
   .filter-btn:hover {
     background-color: #c0c0c0;
+  }
+
+  .goals-panel-header {
+    justify-content: flex-end;
+  }
+
+  .goals-search-controls {
+    width: 100%;
+    margin-left: 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .goals-add-btn {
+    color: #fff;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-family: 'DMSans', sans-serif;
+  }
+
+  .goals-search-container {
+    flex: 1;
   }
   
   .goals-section {
