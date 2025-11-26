@@ -16,37 +16,49 @@ function Home({ firstname = 'Firstname', balance = 6213.45 }: HomeProps) {
       <main className="home-content">
         <div className="welcome-section">
           <h1 className="welcome-message">Welcome Back, {firstname}!</h1>
-          <BalanceCard balance={balance} />
         </div>
         
         <div className="dashboard-grid">
-          <div className="dashboard-column">
-            <h2 className="column-title">pending tasks</h2>
-            <div className="card-list">
-              {Array.from({ length: 3 }).map((_, index) => (
-                <PlaceholderCard key={`task-${index}`} />
-              ))}
+          <div className="dashboard-left">
+            <div className="left-top-section">
+              <div className="dashboard-column half-width">
+                <h2 className="column-title">balance</h2>
+                <div className="card-container">
+                  <BalanceCard balance={balance} />
+                </div>
+              </div>
+              
+              <div className="dashboard-column half-width">
+                <h2 className="column-title">recent expenses</h2>
+                <div className="card-list">
+                  {Array.from({ length: 3 }).map((_, index) => (
+                    <PlaceholderCard key={`expense-${index}`} />
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            <div className="left-bottom-section">
+              <div className="dashboard-column full-width">
+                <h2 className="column-title">pending tasks</h2>
+                <div className="card-list">
+                  {Array.from({ length: 3 }).map((_, index) => (
+                    <PlaceholderCard key={`task-${index}`} />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
           
-          <div className="dashboard-column">
-            <h2 className="column-title">recent expenses</h2>
-            <div className="card-list">
-              {Array.from({ length: 3 }).map((_, index) => (
-                <PlaceholderCard key={`expense-${index}`} />
-              ))}
-            </div>
-          </div>
-          
-          <div className="dashboard-column">
+          <div className="dashboard-column monthly-report-column">
             <h2 className="column-title">monthly report</h2>
-            <div className="report-grid">
+            <div className="card-list">
               <PlaceholderCard size="small" />
               <PlaceholderCard size="small" />
               <PlaceholderCard size="small" />
               <PlaceholderCard size="small" />
-              <PlaceholderCard size="large" />
-              <PlaceholderCard size="medium" />
+              <PlaceholderCard size="small" />
+              <PlaceholderCard size="small" />
             </div>
           </div>
         </div>
