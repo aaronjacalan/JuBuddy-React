@@ -5,20 +5,21 @@ import './Buddies.css';
 
 function Buddies() {
   const buddies = [
-    { name: 'Lorem ipsum dolor' },
-    { name: 'Lorem ipsum dolor' },
-    { name: 'Lorem ipsum dolor' },
-    { name: 'Lorem ipsum dolor' },
-    { name: 'Lorem ipsum dolor' },
-    { name: 'Lorem ipsum dolor' }
+    { name: 'Jairus Espina' },
+    { name: 'Lovely Shane Ong' },
+    { name: 'Christian Fernandez' },
+    { name: 'Aaron Jacalan' },
+    { name: 'Zendy Mariel Dy' },
+    { name: 'John Zillion Reyes' },
+    { name: 'Paulette Olet' }
   ];
 
   return (
     <div className="buddies-container">
       <Navigation activeItem="Buddies" />
       
-      <main className="buddies-content">
-        <div className="buddies-header">
+      <div className="buddies-layout">
+        <header className="buddies-header">
           <h1 className="page-title">View a Buddy's progress</h1>
           <div className="header-actions">
             <div className="search-filter-section">
@@ -52,14 +53,16 @@ function Buddies() {
               Invite Buddy
             </Link>
           </div>
-        </div>
+        </header>
         
-        <div className="buddies-grid">
-          {buddies.map((buddy, index) => (
-            <BuddyCard key={`buddy-${index}`} name={buddy.name} />
-          ))}
-        </div>
-      </main>
+        <main className="buddies-content">
+          <div className="buddies-grid">
+            {buddies.map((buddy, index) => (
+              <BuddyCard key={`buddy-${index}`} name={buddy.name} />
+            ))}
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

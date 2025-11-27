@@ -18,19 +18,17 @@ function Settings() {
   ];
 
   const sections = [
+    // Account section - rendered as AccountSettings component
     {
       id: 'account',
       title: 'Account Settings',
-      items: [
-        'Change Profile Picture',
-        'Update Email Address',
-        'Change Password'
-      ]
+      items: []
     },
     {
       id: 'security',
       title: 'Security Settings',
       items: [
+        'Change Password',
         'Two-Factor Authentication',
         'Login Activity',
         'Privacy Settings'

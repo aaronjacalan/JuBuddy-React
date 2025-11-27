@@ -19,7 +19,7 @@ function BalanceCard({
       <div className="balance-amount">
         <span className="peso-sign">₱</span>
         <span className="amount">
-          {balance.toLocaleString('en-US', { 
+          {balance.toLocaleString('en-PH', { 
             minimumFractionDigits: 2, 
             maximumFractionDigits: 2 
           })}

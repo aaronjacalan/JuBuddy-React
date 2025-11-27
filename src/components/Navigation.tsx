@@ -9,7 +9,7 @@ function Navigation({ activeItem }: NavigationProps) {
   const location = useLocation();
   const navItems = [
     { name: 'Home', path: '/' },
-    { name: 'My Expenses', path: '/expenses' },
+    { name: 'Transactions', path: '/expenses' },
     { name: 'Virtual Jar', path: '/virtual-jar' },
     { name: 'Goals', path: '/goals' },
     { name: 'Buddies', path: '/buddies' }

@@ -39,17 +39,21 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  min-height: 200px;
 }
 
 .content-placeholder {
   background-color: #333;
   border: 1px solid #555;
   border-radius: 8px;
-  aspect-ratio: 1;
+  /* aspect-ratio: 1; */
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  min-height: 40px;
 }
 
 .content-placeholder::before {

@@ -8,13 +8,13 @@ interface HomeProps {
   balance?: number;
 }
 
-function Home({ firstname = 'Firstname', balance = 6213.45 }: HomeProps) {
+function Home({ firstname = 'Ruhmer Jairus', balance = 62213.45 }: HomeProps) {
   return (
     <div className="home-container">
       <Navigation activeItem="Home" />
       
       <main className="home-content">
-        <div className="welcome-section">
+        <div className="welcome-section"> 
           <h1 className="welcome-message">Welcome Back, {firstname}!</h1>
         </div>
         
