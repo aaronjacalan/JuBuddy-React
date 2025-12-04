@@ -66,11 +66,10 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 1rem 1.5rem;
+    padding: 1.1rem 1.5rem;
     background-color: #1a1a1a;
     border: none;
-    border-radius: 25px;
-    font-size: 1rem;
+    border-radius: 50px;
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -107,7 +106,7 @@
     background-color: #d9d9d9;
     font-family: 'DMSans', sans-serif;
     border: none;
-    border-radius: 25px;
+    border-radius: 40px;
     font-size: 1rem;
     outline: none;
   }
@@ -160,10 +159,12 @@
   }
 
   .goals-add-btn {
-    color: #fff;
+    color: #fff !important;
+    font-size: 0.9rem !important;
+    font-weight: 1000 !important;
     cursor: pointer;
     flex-shrink: 0;
-    font-family: 'DMSans', sans-serif;
+    font-family: 'DMSans', sans-serif !important;
   }
 
   .goals-search-container {
@@ -172,7 +173,7 @@
   
 .goals-section {
   background-color: #d9d9d9;
-  border-radius: 20px;
+  border-radius: 10px;
   flex: 1;
   display: flex;
   flex-direction: column;

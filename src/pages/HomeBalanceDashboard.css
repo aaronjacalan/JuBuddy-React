@@ -1,0 +1,71 @@
+@font-face {
+  font-family: 'DMSans';
+  src: url('../assets/DMSans_VariableFont.ttf') format('truetype');
+  font-style: normal;
+}
+
+.dashboard-column.half-width.home-balance-card {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 0.75rem;
+  color: #06D2CA;
+  text-align: center;
+  width: 100%;
+  height: 9.375rem;
+  min-height: 9.375rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  gap: 0.25rem;
+}
+
+.dashboard-column.half-width.home-balance-card .home-balance-label {
+  font-family: 'DMSans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 1000;
+  margin-bottom: 0.25rem;
+  margin-left: 0.6rem;
+  letter-spacing: 0.5px;;
+  text-align: left;
+  width: 100%;
+}
+
+.dashboard-column.half-width.home-balance-card .home-balance-amount {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.125rem;
+  margin-bottom: 0.25rem;
+}
+
+.dashboard-column.half-width.home-balance-card .home-peso-sign {
+  font-family: 'DMSans', sans-serif;
+  font-size: 1.5rem;
+  padding-right: 0.2rem;
+  font-weight: 1000;
+}
+
+.dashboard-column.half-width.home-balance-card .home-balance-amount-value {
+  font-family: 'DMSans', sans-serif;
+  font-size: 3rem;
+  font-weight: 1000;
+  letter-spacing: -0.5px;
+}
+
+/* Responsive design for balance card */
+@media (max-width: 768px) {
+  .dashboard-column.half-width.home-balance-card {
+    padding: 0.5rem;
+    min-height: 9.375rem;
+  }
+
+  .dashboard-column.half-width.home-balance-card .home-peso-sign {
+    font-size: 1rem;
+  }
+
+  .dashboard-column.half-width.home-balance-card .home-balance-amount-value {
+    font-size: 1.5rem;
+  }
+}

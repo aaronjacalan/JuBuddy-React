@@ -1,0 +1,71 @@
+@font-face {
+  font-family: 'DMSans';
+  src: url('../assets/DMSans_VariableFont.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+.virtual-jar-balance-card {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.virtual-jar-balance-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.virtual-jar-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.virtual-jar-item-name {
+  font-family: 'DMSans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #8b4513;
+  text-transform: capitalize;
+}
+
+.virtual-jar-item-amount {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 0.25rem;
+}
+
+.virtual-jar-peso-sign {
+  font-family: 'DMSans', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #8b4513;
+}
+
+.virtual-jar-amount-value {
+  font-family: 'DMSans', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #8b4513;
+  letter-spacing: -0.25px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .virtual-jar-balance-card {
+    padding: 1rem;
+  }
+  
+  .virtual-jar-amount-value {
+    font-size: 1.25rem;
+  }
+  
+  .virtual-jar-peso-sign {
+    font-size: 0.9rem;
+  }
+}

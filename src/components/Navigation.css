@@ -14,7 +14,6 @@ src: url('../assets/LuckiestGuy.ttf') format(truetype);
   align-items: center;
   justify-content: space-between;
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid #CDCDCD;
   font-family: 'DMSans', sans-serif;
 }
 
@@ -25,9 +24,9 @@ src: url('../assets/LuckiestGuy.ttf') format(truetype);
 
 .logo {
   background-color: #1a1a1a;
-  padding: 0.9rem 3rem;
+  padding: 0.5rem 3rem;
   border-radius: 80px;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
   text-decoration: none;
   display: inline-block;

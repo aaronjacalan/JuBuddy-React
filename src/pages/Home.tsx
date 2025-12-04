@@ -1,7 +1,7 @@
 import Navigation from '../components/Navigation';
-import BalanceCard from '../components/BalanceCard';
 import PlaceholderCard from '../components/PlaceholderCard';
 import './Home.css';
+import './HomeBalanceDashboard.css';
 
 interface HomeProps {
   firstname?: string;
@@ -21,17 +21,23 @@ function Home({ firstname = 'Ruhmer Jairus', balance = 62213.45 }: HomeProps) {
         <div className="dashboard-grid">
           <div className="dashboard-left">
             <div className="left-top-section">
-              <div className="dashboard-column half-width">
-                <h2 className="column-title">balance</h2>
-                <div className="card-container">
-                  <BalanceCard balance={balance} />
+              <div className="dashboard-column half-width home-balance-card">
+                <div className="home-balance-label">Current Balance</div>
+                <div className="home-balance-amount">
+                  <span className="home-peso-sign">₱</span>
+                  <span className="home-balance-amount-value">
+                    {balance.toLocaleString('en-PH', { 
+                      minimumFractionDigits: 2, 
+                      maximumFractionDigits: 2 
+                    })}
+                  </span>
                 </div>
               </div>
               
               <div className="dashboard-column half-width">
                 <h2 className="column-title">recent expenses</h2>
                 <div className="card-list">
-                  {Array.from({ length: 3 }).map((_, index) => (
+                  {Array.from({ length: 2 }).map((_, index) => (
                     <PlaceholderCard key={`expense-${index}`} />
                   ))}
                 </div>

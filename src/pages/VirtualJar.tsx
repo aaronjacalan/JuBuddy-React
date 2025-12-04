@@ -1,4 +1,5 @@
 import Navigation from '../components/Navigation';
+import VirtualJarBalanceCard from '../components/VirtualJarBalanceCard';
 import './VirtualJar.css';
 
 interface JarItem {
@@ -29,23 +30,19 @@ function VirtualJar({
           <h2 className="section-title">Virtual Jar</h2>
           <div className="pinned-list">
             {pinnedItems.map((item, index) => (
-              <div key={`pinned-${index}`} className="pinned-item">
-                <div className="item-info">
-                  <span className="item-label">{item.name}</span>
-                  <div className="item-amount">
-                    <span className="peso-sign">₱</span>
-                    <span className="amount">{item.amount.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                  </div>
-                </div>
-              </div>
+              <VirtualJarBalanceCard 
+                key={`pinned-${index}`}
+                name={item.name}
+                amount={item.amount}
+              />
             ))}
           </div>
         </div>
         
         <div className="right-panel">
-          <div className="panel-header goals-panel-header">
-            <div className="search-filter-section goals-search-controls">
-              <div className="search-container goals-search-container">
+          <div className="panel-header virtual-jar-panel-header">
+            <div className="search-filter-section virtual-jar-search-controls">
+              <div className="search-container virtual-jar-search-container">
                 <input 
                   type="text" 
                   placeholder="Search Jar"
@@ -58,12 +55,12 @@ function VirtualJar({
                   <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2"/>
                 </svg>
               </button>
-              <button className="filter-btn">
+              <button className="icon-btn filter-btn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path d="M3 6H21M6 12H18M9 18H15" stroke="currentColor" strokeWidth="2"/>
                 </svg>
               </button>
-              <button className="action-btn add-btn goals-add-btn">
+              <button className="action-btn add-btn virtual-jar-add-btn">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M8 3V13M3 8H13" stroke="currentColor" strokeWidth="2"/>
                 </svg>
@@ -75,7 +72,7 @@ function VirtualJar({
           <div className="jar-section">
             <div className="jar-content-container">
               <div className="jar-grid">
-                {Array.from({ length: 15 }).map((_, index) => (
+                {Array.from({ length: jarItems }).map((_, index) => (
                   <div key={`jar-${index}`} className="jar-item">
                     <div className="jar-item-content">
                       <div className="jar-item-info">
