@@ -5,7 +5,7 @@
   font-style: normal;
 }
 
-.add-transaction-modal-overlay {
+.add-goal-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -20,14 +20,14 @@
   padding: 2rem;
 }
 
-.add-transaction-modal {
+.add-goal-modal {
   background-color: #ffffff;
   border-radius: 20px;
   padding: 2rem;
-  max-width: 35rem;
+  max-width: 50rem;
   width: 95vw;
-  height: 90vh;
-  max-height: 95vh;
+  height: 70vh;
+  max-height: 32rem;
   position: relative;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   display: flex;
@@ -35,15 +35,15 @@
   overflow: hidden;
 }
 
-.add-transaction-modal-header {
+.add-goal-modal-header {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   gap: 1rem;
 }
 
-.add-transaction-modal-close-btn {
+.add-goal-modal-close-btn {
   background: none;
   border: none;
   cursor: pointer;
@@ -56,13 +56,13 @@
   color: #666;
 }
 
-.add-transaction-modal-close-btn:hover {
+.add-goal-modal-close-btn:hover {
   background-color: #f0f0f0;
   color: #1a1a1a;
 }
 
-.add-transaction-title {
-  font-size: 1.75rem;
+.add-goal-title {
+  font-size: 2rem;
   font-weight: 1000;
   color: #1a1a1a;
   margin: 0;
@@ -70,14 +70,14 @@
   flex: 1;
 }
 
-.add-transaction-form {
+.add-goal-form {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
   flex: 1;
 }
 
-.add-transaction-form-content {
+.add-goal-form-content {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -85,99 +85,43 @@
   min-height: 0;
 }
 
-.add-transaction-section {
+.add-goal-two-column-layout {
+  display: flex;
+  gap: 2rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.add-goal-left-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.add-goal-right-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-goal-section {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.add-transaction-label {
+.add-goal-label {
   font-size: 0.9rem;
   font-weight: 600;
   color: #1a1a1a;
   font-family: 'DMSans', sans-serif;
 }
 
-.add-transaction-type-selector {
-  display: flex;
-  gap: 0.5rem;
-  background-color: #f5f5f5;
-  border-radius: 12px;
-  padding: 0.25rem;
-}
 
-.add-transaction-type-btn {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  border: none;
-  background: transparent;
-  border-radius: 8px;
-  font-family: 'DMSans', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #666;
-  cursor: pointer;
-  transition: all 0.3s;
-}
 
-.add-transaction-type-btn.active {
-  background-color: #1a1a1a;
-  color: #ffffff;
-}
-
-.add-transaction-select {
-  padding: 0.875rem 1rem;
-  background-color: #f5f5f5;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  font-family: 'DMSans', sans-serif;
-  font-size: 0.9rem;
-  color: #1a1a1a;
-  outline: none;
-  transition: border-color 0.3s;
-}
-
-.add-transaction-select:focus {
-  border-color: #1a1a1a;
-}
-
-.add-transaction-select option {
-  font-family: 'DMSans', sans-serif;
-}
-
-.add-transaction-amount-input {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.add-transaction-currency {
-  position: absolute;
-  left: 1rem;
-  color: #666;
-  font-family: 'DMSans', sans-serif;
-  font-size: 0.9rem;
-  z-index: 1;
-}
-
-.add-transaction-number-input {
+.add-goal-text-input {
   width: 100%;
-  padding: 0.875rem 1rem 0.875rem 2.5rem;
-  background-color: #f5f5f5;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  font-family: 'DMSans', sans-serif;
-  font-size: 0.9rem;
-  color: #1a1a1a;
-  outline: none;
-  transition: border-color 0.3s;
-}
-
-.add-transaction-number-input:focus {
-  border-color: #1a1a1a;
-}
-
-.add-transaction-date-input {
   padding: 0.875rem 1rem;
   background-color: #f5f5f5;
   border: 1px solid #e0e0e0;
@@ -189,19 +133,53 @@
   transition: border-color 0.3s;
 }
 
-.add-transaction-date-input:focus {
+.add-goal-text-input:focus {
   border-color: #1a1a1a;
 }
 
+.add-goal-textarea {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  font-family: 'DMSans', sans-serif;
+  font-size: 0.9rem;
+  color: #1a1a1a;
+  outline: none;
+  transition: border-color 0.3s;
+  resize: vertical;
+  min-height: 200px;
+  flex: 1;
+}
 
+.add-goal-textarea:focus {
+  border-color: #1a1a1a;
+}
 
-.add-transaction-actions {
+.add-goal-date-input {
+  padding: 0.875rem 1rem;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  font-family: 'DMSans', sans-serif;
+  font-size: 0.9rem;
+  color: #1a1a1a;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.add-goal-date-input:focus {
+  border-color: #1a1a1a;
+}
+
+.add-goal-actions {
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
 }
 
-.add-transaction-cancel-btn {
+.add-goal-cancel-btn {
   flex: 1;
   padding: 0.875rem 1.5rem;
   background-color: #f5f5f5;
@@ -215,12 +193,12 @@
   transition: background-color 0.3s;
 }
 
-.add-transaction-cancel-btn:hover {
+.add-goal-cancel-btn:hover {
   background-color: #e0e0e0;
   color: #1a1a1a;
 }
 
-.add-transaction-save-btn {
+.add-goal-save-btn {
   flex: 1;
   padding: 0.875rem 1.5rem;
   background-color: #1a1a1a;
@@ -234,11 +212,11 @@
   transition: background-color 0.3s;
 }
 
-.add-transaction-save-btn:hover {
+.add-goal-save-btn:hover {
   background-color: #333333;
 }
 
-/* Responsive design for add-transaction modal */
+/* Responsive design for add-goal modal */
 @media (max-width: 768px) {
   @font-face {
   font-family: 'DMSans';
@@ -247,34 +225,48 @@
   font-style: normal;
 }
 
-.add-transaction-modal-overlay {
+  .add-goal-modal-overlay {
     padding: 1rem;
   }
   
-  .add-transaction-modal {
+  .add-goal-modal {
     padding: 1.5rem;
     width: 95vw;
     height: 92vh;
     max-height: 97vh;
   }
   
-  .add-transaction-modal-header {
+  .add-goal-modal-header {
     margin-bottom: 1.5rem;
   }
   
-  .add-transaction-title {
+  .add-goal-title {
     font-size: 1.25rem;
   }
   
-  .add-transaction-form {
+  .add-goal-form {
     gap: 1.25rem;
   }
   
-  .add-transaction-form-content {
+  .add-goal-form-content {
     gap: 1.25rem;
   }
   
-  .add-transaction-actions {
+  .add-goal-actions {
     flex-direction: column;
+  }
+
+  .add-goal-two-column-layout {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .add-goal-left-column,
+  .add-goal-right-column {
+    flex: none;
+  }
+
+  .add-goal-textarea {
+    min-height: 200px;
   }
 }

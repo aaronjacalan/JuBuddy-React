@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import BuddyInviteCard from './BuddyInviteCard';
 import './InviteBuddyModal.css';
 
@@ -7,6 +8,9 @@ interface InviteBuddyModalProps {
 }
 
 function InviteBuddyModal({ isOpen, onClose }: InviteBuddyModalProps) {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [appliedSearchTerm, setAppliedSearchTerm] = useState('');
+
   if (!isOpen) return null;
 
   const potentialBuddies = [
@@ -30,6 +34,20 @@ function InviteBuddyModal({ isOpen, onClose }: InviteBuddyModalProps) {
     { firstName: 'Olivia', lastName: 'Moore', username: 'oliviam' }
   ];
 
+  // Filter buddies based on applied search term
+  const filteredBuddies = appliedSearchTerm
+    ? potentialBuddies.filter(buddy => {
+        const fullName = `${buddy.firstName} ${buddy.lastName}`.toLowerCase();
+        const searchLower = appliedSearchTerm.toLowerCase();
+        return (
+          buddy.firstName.toLowerCase().includes(searchLower) ||
+          buddy.lastName.toLowerCase().includes(searchLower) ||
+          buddy.username.toLowerCase().includes(searchLower) ||
+          fullName.includes(searchLower)
+        );
+      })
+    : potentialBuddies;
+
   return (
     <div className="invite-buddy-modal-overlay" onClick={onClose}>
       <div className="invite-buddy-modal" onClick={(e) => e.stopPropagation()}>
@@ -49,30 +67,30 @@ function InviteBuddyModal({ isOpen, onClose }: InviteBuddyModalProps) {
           
           <div className="invite-buddy-search-section">
             <div className="invite-buddy-search-container">
-              <input 
-                type="text" 
+              <input
+                type="text"
                 placeholder="search username"
                 className="invite-buddy-search-input"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <button className="invite-buddy-icon-btn invite-buddy-search-icon-btn">
+            <button
+              className="invite-buddy-icon-btn invite-buddy-search-icon-btn"
+              onClick={() => setAppliedSearchTerm(searchTerm)}
+            >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
                   <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2"/>
                 </svg>
               </button>
-            <button className="invite-buddy-icon-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M3 6H21M6 12H18M9 18H15" stroke="currentColor" strokeWidth="2"/>
-              </svg>
-            </button>
           </div>
         </div>
         
         {/* Scrollable buddies list section */}
         <div className="invite-buddy-list-section">
           <div className="invite-buddy-invite-list">
-            {potentialBuddies.map((buddy, index) => (
+            {filteredBuddies.map((buddy, index) => (
               <BuddyInviteCard
                 key={`invite-${index}`}
                 firstName={buddy.firstName}

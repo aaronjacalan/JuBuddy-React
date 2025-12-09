@@ -1,0 +1,222 @@
+@font-face {
+    font-family: 'DMSans';
+    src: url('../assets/DMSans_VariableFont. ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  
+  .add-to-jar-modal-overlay {
+    position: fixed;
+    top:  0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 2rem;
+  }
+  
+  .add-to-jar-modal {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 28rem;
+    width: 95vw;
+    max-height: 90vh;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .add-to-jar-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom:  1.5rem;
+  }
+  
+  .add-to-jar-title {
+    font-family: 'DMSans', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color:  #000;
+    margin: 0;
+  }
+  
+  .add-to-jar-modal-close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+  }
+  
+  .add-to-jar-modal-close-btn:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .add-to-jar-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    flex: 1;
+  }
+  
+  .add-to-jar-form-content {
+    display: flex;
+    flex-direction:  column;
+    gap: 1.5rem;
+  }
+  
+  .add-to-jar-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .add-to-jar-label {
+    font-family: 'DMSans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color:  #333;
+  }
+  
+  .add-to-jar-text-input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    background-color: #f5f5f5;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    font-family: 'DMSans', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s, background-color 0.2s;
+    box-sizing: border-box;
+  }
+  
+  .add-to-jar-text-input:focus {
+    border-color: #06D2CA;
+    background-color: #fff;
+  }
+  
+  .add-to-jar-text-input::placeholder {
+    color: #999;
+  }
+  
+  .add-to-jar-amount-input {
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 0 1.25rem;
+    transition: border-color 0.2s, background-color 0.2s;
+  }
+  
+  .add-to-jar-amount-input:focus-within {
+    border-color: #06D2CA;
+    background-color:  #fff;
+  }
+  
+  .add-to-jar-currency {
+    font-family: 'DMSans', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color:  #06D2CA;
+    margin-right: 0.5rem;
+  }
+  
+  .add-to-jar-number-input {
+    flex: 1;
+    padding: 1rem 0;
+    background: transparent;
+    border:  none;
+    font-family: 'DMSans', sans-serif;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  .add-to-jar-number-input::placeholder {
+    color: #999;
+  }
+  
+  /* Hide number input spinners */
+  .add-to-jar-number-input::-webkit-outer-spin-button,
+  .add-to-jar-number-input::-webkit-inner-spin-button {
+    -webkit-appearance:  none;
+    margin: 0;
+  }
+  
+  .add-to-jar-number-input[type=number] {
+    -moz-appearance:  textfield;
+  }
+  
+  .add-to-jar-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .add-to-jar-cancel-btn {
+    flex: 1;
+    padding: 1rem;
+    background-color: #f5f5f5;
+    border:  none;
+    border-radius: 12px;
+    font-family: 'DMSans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .add-to-jar-cancel-btn:hover {
+    background-color: #e5e5e5;
+  }
+  
+  .add-to-jar-save-btn {
+    flex: 1;
+    padding: 1rem;
+    background-color:  #06D2CA;
+    border:  none;
+    border-radius: 12px;
+    font-family: 'DMSans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .add-to-jar-save-btn:hover {
+    background-color: #05b8b1;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width:  480px) {
+    .add-to-jar-modal-overlay {
+      padding: 1rem;
+    }
+    
+    .add-to-jar-modal {
+      padding: 1.5rem;
+    }
+    
+    .add-to-jar-title {
+      font-size: 1.25rem;
+    }
+    
+    .add-to-jar-actions {
+      flex-direction: column;
+    }
+  }

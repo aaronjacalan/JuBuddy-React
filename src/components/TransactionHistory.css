@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'DMSans';
-  src: url('../assets/DMSans_VariableFont.ttf') format('truetype');
+  src: url('../assets/DMSans_VariableFont. ttf') format('truetype');
   font-weight: 100 900;
   font-style: normal;
 }
@@ -41,7 +41,7 @@
 
 .transaction-history-title {
   font-family: 'DMSans', sans-serif;
-  font-size: 1.75rem;
+  font-size: 1. 75rem;
   font-weight: 1000;
   color: #000;
   margin: 0;
@@ -71,18 +71,25 @@
   border-bottom: 1px solid #e0e0e0;
 }
 
-.transaction-history-search {
-  position: relative;
+/* Search section - similar to invite buddy implementation */
+.transaction-history-search-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.transaction-history-search-container {
+  flex: 1;
   display: flex;
   align-items: center;
 }
 
 .transaction-history-search-input {
   width: 100%;
-  padding: 0.875rem 3rem 0.875rem 1.25rem;
+  padding: 1rem 1.25rem;
   background-color: #f5f5f5;
   border: none;
-  border-radius: 12px;
+  border-radius: 50px;
   font-family: 'DMSans', sans-serif;
   font-size: 1rem;
   outline: none;
@@ -93,10 +100,35 @@
   background-color: #ebebeb;
 }
 
-.transaction-history-search .search-icon {
-  position: absolute;
-  right: 1rem;
+.transaction-history-search-input::placeholder {
   color: #666;
+}
+
+/* Icon button styles - similar to invite buddy implementation */
+.transaction-history-icon-btn {
+  width: 3rem;
+  height: 3rem;
+  flex: 0 0 3rem;
+  padding: 0;
+  border-radius: 50%;
+  border: none;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0. 3s;
+  flex-shrink: 0;
+  color: #1a1a1a;
+}
+
+.transaction-history-icon-btn:hover {
+  background-color: #06D2CA;
+  color: #ffffff;
+}
+
+.transaction-history-search-icon-btn {
+  position: static;
 }
 
 .transaction-history-filters {
@@ -133,6 +165,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  min-height: 300px;
 }
 
 .transaction-history-list::-webkit-scrollbar {
@@ -164,6 +197,37 @@
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
+.transaction-history-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+  color: #888;
+  gap: 1rem;
+}
+
+.transaction-history-empty-icon {
+  color: #ccc;
+  margin-bottom: 0.5rem;
+}
+
+.transaction-history-empty-text {
+  font-family: 'DMSans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.transaction-history-empty-subtext {
+  font-family: 'DMSans', sans-serif;
+  font-size: 0.9rem;
+  color: #888;
+  max-width: 280px;
+  line-height: 1.4;
+}
+
 .transaction-history-item:hover {
   transform: translateX(4px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -184,7 +248,7 @@
 
 .transaction-history-date {
   font-family: 'DMSans', sans-serif;
-  font-size: 0.8rem;
+  font-size: 0. 8rem;
   color: #888;
 }
 
@@ -194,12 +258,12 @@
   font-weight: 700;
 }
 
-.transaction-history-amount.income {
-  color: #22c55e;
+.transaction-history-amount .income {
+  color: #06d2ca;
 }
 
 .transaction-history-amount.expense {
-  color: #ef4444;
+  color: #D2060E;
 }
 
 @media (max-width: 768px) {
@@ -216,11 +280,20 @@
   }
 
   .transaction-history-title {
-    font-size: 1.5rem;
+    font-size: 1. 5rem;
   }
 
   .transaction-history-controls {
     padding: 1rem 1.5rem;
+  }
+
+  .transaction-history-search-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .transaction-history-search-container {
+    width: 100%;
   }
 
   .transaction-history-list {

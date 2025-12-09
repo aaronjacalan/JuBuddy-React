@@ -1,23 +1,53 @@
+import { useState } from 'react';
 import './SettingsItem.css';
 
 interface SettingsItemProps {
   text?: string;
+  hasToggle?: boolean;
+  onToggle?: (enabled: boolean) => void;
+  onClick?: () => void;
 }
 
-function SettingsItem({ text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit' }: SettingsItemProps) {
+function SettingsItem({ 
+  text = 'Setting Item', 
+  hasToggle = false,
+  onToggle,
+  onClick 
+}: SettingsItemProps) {
+  const [isEnabled, setIsEnabled] = useState(false);
+
+  const handleToggle = () => {
+    const newValue = !isEnabled;
+    setIsEnabled(newValue);
+    onToggle?.(newValue);
+  };
+
+  const handleClick = () => {
+    if (! hasToggle) {
+      onClick?.();
+    }
+  };
+
   return (
-    <div className="settings-item">
+    <div className={`settings-item ${! hasToggle ? 'clickable' : ''}`} onClick={handleClick}>
       <span className="settings-item-text">{text}</span>
-      <button className="settings-item-action">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <rect x="2" y="2" width="12" height="12" stroke="currentColor" strokeWidth="2" fill="none"/>
-          <path d="M5 8L7 10L11 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0"/>
-          <path d="M5 5L11 11M11 5L5 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        </svg>
-      </button>
+      {hasToggle ?  (
+        <button 
+          className={`settings-toggle ${isEnabled ? 'enabled' : ''}`}
+          onClick={handleToggle}
+          aria-label={isEnabled ? 'Disable' : 'Enable'}
+        >
+          <span className="toggle-slider"></span>
+        </button>
+      ) : (
+        <button className="settings-item-action" aria-label="Configure">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      )}
     </div>
   );
 }
 
 export default SettingsItem;
-

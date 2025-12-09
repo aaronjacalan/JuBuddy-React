@@ -90,11 +90,6 @@ function AddTransactionModal({ isOpen, onClose, onSave }: AddTransactionModalPro
       <div className="add-transaction-modal" onClick={(e) => e.stopPropagation()}>
         <div className="add-transaction-modal-header">
           <h2 className="add-transaction-title">Add New Transaction</h2>
-          <button className="add-transaction-modal-close-btn" onClick={handleClose}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2"/>
-            </svg>
-          </button>
         </div>
 
         <form onSubmit={handleSubmit} className="add-transaction-form">

@@ -18,7 +18,7 @@ function Settings() {
   ];
 
   const sections = [
-    // Account section - rendered as AccountSettings component
+    // Account section - rendered as AccountSettings component (includes Change Password)
     {
       id: 'account',
       title: 'Account Settings',
@@ -28,10 +28,10 @@ function Settings() {
       id: 'security',
       title: 'Security Settings',
       items: [
-        'Change Password',
         'Two-Factor Authentication',
         'Login Activity',
-        'Privacy Settings'
+        'Privacy Settings',
+        'Session Management'
       ]
     },
     {
@@ -67,10 +67,13 @@ function Settings() {
     setActiveTab(index);
     const section = sectionRefs.current[index];
     if (section && contentRef.current) {
-      const contentTop = contentRef.current.getBoundingClientRect().top + contentRef.current.scrollTop;
-      const sectionTop = section.getBoundingClientRect().top + contentRef.current.scrollTop - contentTop;
+      const containerRect = contentRef.current.getBoundingClientRect();
+      const sectionRect = section.getBoundingClientRect();
+      const scrollTop = contentRef.current.scrollTop;
+      const offset = sectionRect.top - containerRect.top + scrollTop - 20;
+      
       contentRef.current.scrollTo({
-        top: sectionTop - 20,
+        top: offset,
         behavior: 'smooth'
       });
     }
@@ -78,47 +81,30 @@ function Settings() {
 
   useEffect(() => {
     const content = contentRef.current;
-    if (!content) return;
+    if (! content) return;
 
     const handleScroll = () => {
-      const viewportTop = content.scrollTop;
-      const viewportBottom = viewportTop + content.clientHeight;
-      const viewportCenter = viewportTop + content.clientHeight / 2;
+      const containerRect = content.getBoundingClientRect();
+      const containerTop = containerRect.top;
+      const viewportCenter = containerRect.height / 2;
       
-      let activeIndex = 0;
-      let maxVisibleArea = 0;
-      let centerSectionIndex = -1;
+      let closestIndex = 0;
+      let closestDistance = Infinity;
       
-      // First, try to find a section that contains the viewport center
       sectionRefs.current.forEach((section, index) => {
         if (!section) return;
         
-        const sectionTop = section.offsetTop;
-        const sectionBottom = sectionTop + section.offsetHeight;
+        const sectionRect = section.getBoundingClientRect();
+        const sectionCenter = sectionRect. top - containerTop + sectionRect.height / 2;
+        const distance = Math.abs(sectionCenter - viewportCenter);
         
-        // Check if the center of the viewport is within this section
-        if (viewportCenter >= sectionTop && viewportCenter <= sectionBottom) {
-          centerSectionIndex = index;
-        }
-        
-        // Calculate the visible portion of this section
-        const visibleTop = Math.max(viewportTop, sectionTop);
-        const visibleBottom = Math.min(viewportBottom, sectionBottom);
-        const visibleArea = Math.max(0, visibleBottom - visibleTop);
-        
-        // Track the section with the most visible area
-        if (visibleArea > maxVisibleArea) {
-          maxVisibleArea = visibleArea;
-          activeIndex = index;
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
         }
       });
-      
-      // Prioritize the section containing the viewport center
-      if (centerSectionIndex !== -1) {
-        activeIndex = centerSectionIndex;
-      }
 
-      setActiveTab(activeIndex);
+      setActiveTab(closestIndex);
     };
 
     // Initial check
@@ -145,21 +131,21 @@ function Settings() {
           ))}
           <button className="settings-logout-button" onClick={() => {
             // Handle logout logic here
-            console.log('Logout clicked');
+            console. log('Logout clicked');
           }}>
             Logout
           </button>
         </aside>
         
         <main className="settings-content" ref={contentRef}>
-          {sections.map((section, sectionIndex) => (
+          {sections. map((section, sectionIndex) => (
             <div 
               key={section.id} 
               className={`settings-section ${sectionIndex === 0 ? 'account-section' : ''}`}
               ref={(el) => { sectionRefs.current[sectionIndex] = el; }}
               id={section.id}
             >
-              {sectionIndex === 0 ? (
+              {sectionIndex === 0 ?  (
                 <AccountSettings />
               ) : (
                 <>

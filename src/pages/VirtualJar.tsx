@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import Navigation from '../components/Navigation';
 import VirtualJarBalanceCard from '../components/VirtualJarBalanceCard';
+import AddToJarModal from '../components/AddToJarModal';
 import './VirtualJar.css';
 
 interface JarItem {
@@ -8,19 +10,28 @@ interface JarItem {
 }
 
 interface VirtualJarProps {
-  pinnedItems?: JarItem[];
-  jarItems?: number;
+  pinnedItems?:  JarItem[];
+  jarItems?:  number;
 }
 
 function VirtualJar({ 
   pinnedItems = [
     { name: 'Item name', amount: 1234.56 },
-    { name: 'Item name', amount: 1234.56 },
+    { name: 'Item name', amount:  1234.56 },
     { name: 'Item name', amount: 1234.56 },
     { name: 'Item name', amount: 1234.56 }
   ],
   jarItems = 5
 }: VirtualJarProps) {
+  const [isAddToJarModalOpen, setIsAddToJarModalOpen] = useState(false);
+
+  const openAddToJarModal = () => setIsAddToJarModalOpen(true);
+  const closeAddToJarModal = () => setIsAddToJarModalOpen(false);
+
+  const handleSaveJarItem = (item:  { name: string; amount: number }) => {
+    console.log('New jar item saved:', item);
+  };
+
   return (
     <div className="virtual-jar-container">
       <Navigation activeItem="Virtual Jar" />
@@ -52,7 +63,7 @@ function VirtualJar({
               <button className="icon-btn search-icon-btn" type="button">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
-                  <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2"/>
+                  <path d="M21 21L16. 65 16.65" stroke="currentColor" strokeWidth="2"/>
                 </svg>
               </button>
               <button className="icon-btn filter-btn">
@@ -60,7 +71,7 @@ function VirtualJar({
                   <path d="M3 6H21M6 12H18M9 18H15" stroke="currentColor" strokeWidth="2"/>
                 </svg>
               </button>
-              <button className="action-btn add-btn virtual-jar-add-btn">
+              <button className="action-btn add-btn virtual-jar-add-btn" onClick={openAddToJarModal}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M8 3V13M3 8H13" stroke="currentColor" strokeWidth="2"/>
                 </svg>
@@ -92,6 +103,13 @@ function VirtualJar({
           </div>
         </div>
       </div>
+
+      {/* Add to Jar Modal */}
+      <AddToJarModal 
+        isOpen={isAddToJarModalOpen}
+        onClose={closeAddToJarModal}
+        onSave={handleSaveJarItem}
+      />
     </div>
   );
 }

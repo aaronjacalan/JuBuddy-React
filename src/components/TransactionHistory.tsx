@@ -18,29 +18,31 @@ interface TransactionHistoryProps {
 
 function TransactionHistory({ isOpen, onClose, transactions }: TransactionHistoryProps) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [appliedSearchTerm, setAppliedSearchTerm] = useState('');
   const [filterType, setFilterType] = useState<'all' | 'expense' | 'income'>('all');
 
   // Sample transactions if none provided
-  const sampleTransactions: Transaction[] = Array.from({ length: 25 }).map((_, index) => ({
+  const sampleTransactions: Transaction[] = Array.from({ length: 25 }). map((_, index) => ({
     id: index,
-    description: index % 8 === 0 ? 'Grocery Shopping' : 
+    description: index % 8 === 0 ? 'Grocery Shopping' :
                  index % 8 === 1 ? 'Gas Station' :
                  index % 8 === 2 ? 'Coffee Shop' :
-                 index % 8 === 3 ? 'Online Purchase' :
-                 index % 8 === 4 ? 'Restaurant Bill' :
-                 index % 8 === 5 ? 'Salary Deposit' :
+                 index % 8 === 3 ?  'Online Purchase' :
+                 index % 8 === 4 ?  'Restaurant Bill' :
+                 index % 8 === 5 ?  'Salary Deposit' :
                  index % 8 === 6 ? 'Freelance Payment' :
                  'Investment Dividend',
-    amount: (index % 8 < 5 ? -1 : 1) * (Math.random() * 5000 + 100),
-    type: index % 8 < 5 ? 'expense' : 'income',
+    amount: (index % 8 < 5 ? -1 : 1) * (100 + (index * 100) % 5000),
+    type: index % 8 < 5 ?  'expense' : 'income',
     date: new Date(Date.now() - index * 86400000).toLocaleDateString(),
-    category: index % 8 < 5 ? 'Expense' : 'Income'
+    category: index % 8 < 5 ?  'Expense' : 'Income'
   }));
 
   const displayTransactions = transactions || sampleTransactions;
 
   const filteredTransactions = displayTransactions.filter(t => {
-    const matchesSearch = t.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const searchLower = appliedSearchTerm.toLowerCase();
+    const matchesSearch = !searchLower || t.description.toLowerCase().includes(searchLower);
     const matchesFilter = filterType === 'all' || t.type === filterType;
     return matchesSearch && matchesFilter;
   });
@@ -60,18 +62,25 @@ function TransactionHistory({ isOpen, onClose, transactions }: TransactionHistor
         </div>
 
         <div className="transaction-history-controls">
-          <div className="transaction-history-search">
-            <input
-              type="text"
-              placeholder="Search transactions..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="transaction-history-search-input"
-            />
-            <svg className="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
-              <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2"/>
-            </svg>
+          <div className="transaction-history-search-section">
+            <div className="transaction-history-search-container">
+              <input
+                type="text"
+                placeholder="Search transactions..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e. target.value)}
+                className="transaction-history-search-input"
+              />
+            </div>
+            <button
+              className="transaction-history-icon-btn transaction-history-search-icon-btn"
+              onClick={() => setAppliedSearchTerm(searchTerm)}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
+                <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2"/>
+              </svg>
+            </button>
           </div>
           <div className="transaction-history-filters">
             <button 
@@ -87,7 +96,7 @@ function TransactionHistory({ isOpen, onClose, transactions }: TransactionHistor
               Income
             </button>
             <button 
-              className={`filter-tab ${filterType === 'expense' ? 'active' : ''}`}
+              className={`filter-tab ${filterType === 'expense' ?  'active' : ''}`}
               onClick={() => setFilterType('expense')}
             >
               Expenses
@@ -96,20 +105,37 @@ function TransactionHistory({ isOpen, onClose, transactions }: TransactionHistor
         </div>
 
         <div className="transaction-history-list">
-          {filteredTransactions.map((transaction) => (
-            <div key={transaction.id} className="transaction-history-item">
-              <div className="transaction-history-info">
-                <div className="transaction-history-description">{transaction.description}</div>
-                <div className="transaction-history-date">{transaction.date}</div>
+          {filteredTransactions.length === 0 ? (
+            <div className="transaction-history-empty">
+              <div className="transaction-history-empty-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5"/>
+                  <path d="M8 12l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </div>
-              <div className={`transaction-history-amount ${transaction.type}`}>
-                {transaction.type === 'income' ? '+' : ''}₱{Math.abs(transaction.amount).toLocaleString('en-PH', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                })}
+              <div className="transaction-history-empty-text">
+                {appliedSearchTerm || filterType !== 'all' ? 'No transactions found' : 'No transactions available'}
+              </div>
+              <div className="transaction-history-empty-subtext">
+                {appliedSearchTerm ? `No results for "${appliedSearchTerm}"` : filterType !== 'all' ? `No ${filterType} transactions` : 'Add some transactions to get started'}
               </div>
             </div>
-          ))}
+          ) : (
+            filteredTransactions. map((transaction) => (
+              <div key={transaction.id} className="transaction-history-item">
+                <div className="transaction-history-info">
+                  <div className="transaction-history-description">{transaction.description}</div>
+                  <div className="transaction-history-date">{transaction.date}</div>
+                </div>
+                <div className={`transaction-history-amount ${transaction.type}`}>
+                  {transaction.type === 'income' ? '+' : ''}₱{Math.abs(transaction. amount).toLocaleString('en-PH', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })}
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>
