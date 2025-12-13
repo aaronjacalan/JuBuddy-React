@@ -4,7 +4,7 @@ Follow these steps to run the project locally:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/USERNAME/REPO.git
+git clone https://github.com/aaronjacalan/JuBuddy-React.git
 
 # 2. Go into the project directory
 cd REPO
