@@ -1,281 +1,152 @@
+/* Container */
 .statistics-chart {
-  background-color: #f5f5f5;
+  background: #ffffff;
   border-radius: 20px;
   padding: 1.5rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  flex: 1;
-  min-height: 0;
+  width: 100%;
   height: 100%;
+  min-height: 350px;
+  box-sizing: border-box;
+  font-family: 'DM Sans', sans-serif;
 }
 
+/* Header */
 .statistics-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.statistics-title {
-  font-family: 'DMSans', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #000;
-  margin: 0;
-}
-
-.statistics-tabs {
-  display: flex;
-  gap: 1. 5rem;
-}
-
-.stat-tab {
-  padding: 0;
-  border: none;
-  background: transparent;
-  font-family: 'DMSans', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #666;
-  cursor: pointer;
-  transition: all 0. 2s;
-}
-
-.stat-tab:hover {
-  color: #999;
-}
-
-.stat-tab.active {
-  color: #06D2CA;
-}
-
-.day-selector {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.5rem;
-  overflow-x: auto;
-  padding: 0. 25rem 0;
-}
-
-.day-selector::-webkit-scrollbar {
-  height: 4px;
-}
-
-.day-selector::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.day-selector::-webkit-scrollbar-thumb {
-  background: #06D2CA;
-  border-radius: 4px;
-}
-
-.day-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;
-  padding: 0.75rem 1rem;
-  border-radius: 12px;
-  border: 1px solid #e0e0e0;
-  background-color: transparent;
-  cursor: pointer;
-  transition: all 0. 2s;
-  min-width: 50px;
+  margin-bottom: 1.5rem;
   flex-shrink: 0;
 }
 
-.day-item:hover {
-  border-color: #06D2CA;
-  background-color: rgba(6, 210, 202, 0.1);
-}
-
-.day-item.active {
-  background-color: rgba(6, 210, 202, 0.5);
-  border-color: rgba(6, 210, 202, 0.5);
-}
-
-.day-item.today {
-  background-color: rgba(6, 210, 202, 0.5) !important;
-  border-color: rgba(6, 210, 202, 0.5) !important;
-}
-
-.day-number {
-  font-family: 'DMSans', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #333;
-}
-
-.day-item.active .day-number {
+.statistics-title {
+  font-size: 1.1rem;
+  font-weight: 700;
   color: #1a1a1a;
+  margin: 0;
 }
 
-.day-item.active .day-label {
-  color: #1a1a1a;
-}
-
-.day-label {
-  font-family: 'DMSans', sans-serif;
-  font-size: 0.7rem;
-  color: #888;
-}
-
-.chart-container {
+/* Dropdowns */
+.filter-controls {
   display: flex;
-  gap: 0.75rem;
-  flex: 1;
-  min-height: 200px;
+  gap: 8px;
 }
 
+.chart-select {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  background-color: #f8f9fa;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #495057;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Chart Layout */
+.chart-container {
+  flex: 1;
+  display: flex;
+  gap: 0.5rem;
+  position: relative;
+  min-height: 0;
+  /* Removed overflow: hidden to prevent clipping labels */
+  padding-bottom: 10px; 
+}
+
+/* Y-Axis (Left) */
 .y-axis-labels {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0.5rem 0 1. 5rem 0;
-  font-family: 'DMSans', sans-serif;
-  font-size: 0.75rem;
-  color: #666;
-  min-width: 25px;
+  padding-bottom: 2rem; /* Matches graph bottom */
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #868e96; /* Darker grey */
+  text-align: right;
+  min-width: 40px;
+  flex-shrink: 0;
 }
 
+/* Chart Area */
 .chart-area {
   flex: 1;
   display: flex;
   flex-direction: column;
   position: relative;
-  min-height: 150px;
-}
-
-.area-chart-svg {
-  flex: 1;
   width: 100%;
 }
 
+/* SVG */
+.area-chart-svg {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  display: block;
+  overflow: visible;
+}
+
+/* X-Axis (Bottom) - Now Relative for Absolute Children */
+.x-axis-labels {
+  position: relative;
+  height: 20px;
+  margin-top: 8px;
+  border-top: 1px dashed #e9ecef;
+  width: 100%;
+}
+
+/* Individual Date Labels */
+.x-axis-label {
+  position: absolute;
+  transform: translateX(-50%); /* Centers the text on the tick */
+  font-size: 0.7rem;
+  font-weight: 600; /* Bolder */
+  color: #868e96; /* Darker grey for visibility */
+  bottom: 0;
+  white-space: nowrap;
+}
+
+/* Paths */
 .area-path {
-  transition: all 0. 3s ease;
-}
-
-.expense-area {
-  opacity: 1;
-}
-
-.income-area {
-  opacity: 0.8;
-}
-
-.solid-line {
-  filter: drop-shadow(0 0 2px rgba(210, 6, 14, 0.5));
-}
-
-.dotted-line {
-  opacity: 1;
+  transition: d 0.4s ease;
 }
 
 .income-line {
-  filter: drop-shadow(0 0 2px rgba(6, 210, 202, 0.4));
+  filter: drop-shadow(0 4px 6px rgba(6, 210, 202, 0.3));
 }
 
 .expense-line {
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  filter: drop-shadow(0 4px 6px rgba(210, 6, 14, 0.3));
 }
 
-.x-axis-labels {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 0. 5rem;
-  font-family: 'DMSans', sans-serif;
-  font-size: 0.65rem;
-  color: #666;
-}
-
-.x-axis-labels span {
-  text-align: center;
-  min-width: 30px;
-}
-
-/* Chart Legend */
+/* Legend */
 .chart-legend {
   display: flex;
   justify-content: center;
-  gap: 2rem;
-  padding-top: 0.5rem;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+  flex-shrink: 0;
 }
 
-.legend-item-stat {
+.legend-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-family: 'DMSans', sans-serif;
-  font-size: 0.85rem;
-  color: #666;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #495057;
 }
 
-.legend-indicator {
-  width: 20px;
-  height: 3px;
-  border-radius: 2px;
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
 }
 
-.income-indicator {
-  background-color: #06D2CA;
-  border: 2px solid #06D2CA;
-  height: 12px;
-  width: 12px;
-}
-
-.expense-indicator {
-  background-color: #D2060E;
-  height: 12px;
-  width: 12px;
-}
-
-@media (max-width: 1200px) {
-  .day-selector {
-    overflow-x: scroll;
-  }
-  
-  .day-item {
-    min-width: 45px;
-    padding: 0. 5rem 0. 75rem;
-  }
-  
-  .chart-container {
-    min-height: 180px;
-  }
-  
-  .x-axis-labels {
-    font-size: 0.55rem;
-  }
-  
-  .x-axis-labels span {
-    min-width: 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  .statistics-chart {
-    padding: 1rem;
-  }
-  
-  .statistics-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  
-  .statistics-tabs {
-    gap: 1rem;
-  }
-  
-  .day-item {
-    min-width: 40px;
-    padding: 0. 5rem;
-  }
-  
-  .x-axis-labels span:nth-child(even) {
-    display: none;
-  }
-}
+.income-dot { background-color: #06D2CA; }
+.expense-dot { background-color: #D2060E; }

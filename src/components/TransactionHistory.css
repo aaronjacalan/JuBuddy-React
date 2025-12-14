@@ -1,302 +1,268 @@
-@font-face {
-  font-family: 'DMSans';
-  src: url('../assets/DMSans_VariableFont. ttf') format('truetype');
-  font-weight: 100 900;
-  font-style: normal;
-}
-
+/* 1. Modal Overlay (Dark Background) */
 .transaction-history-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  padding: 2rem;
+  backdrop-filter: blur(4px); /* Modern blur effect */
+  animation: fadeIn 0.2s ease-out;
 }
 
+/* 2. Modal Window */
 .transaction-history-modal {
-  background-color: #fff;
-  border-radius: 20px;
+  background: #ffffff;
   width: 100%;
-  max-width: 700px;
-  max-height: 85vh;
+  max-width: 500px; /* Limits width on large screens */
+  height: 80vh; /* Takes up 80% of screen height */
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'DM Sans', sans-serif;
 }
 
+/* 3. Header Section */
 .transaction-history-header {
+  padding: 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #f1f3f5;
+  background-color: #fff;
 }
 
 .transaction-history-title {
-  font-family: 'DMSans', sans-serif;
-  font-size: 1. 75rem;
-  font-weight: 1000;
-  color: #000;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
   margin: 0;
 }
 
 .transaction-history-close {
-  background: none;
+  background: transparent;
   border: none;
+  color: #adb5bd;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  transition: background-color 0.2s;
 }
 
 .transaction-history-close:hover {
-  background-color: #f0f0f0;
+  background-color: #f8f9fa;
+  color: #343a40;
 }
 
+/* 4. Controls (Search + Filters) */
 .transaction-history-controls {
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #f1f3f5;
 }
 
-/* Search section - similar to invite buddy implementation */
+/* Search Bar */
 .transaction-history-search-section {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.transaction-history-search-container {
-  flex: 1;
-  display: flex;
-  align-items: center;
-}
-
-.transaction-history-search-input {
-  width: 100%;
-  padding: 1rem 1.25rem;
-  background-color: #f5f5f5;
-  border: none;
-  border-radius: 50px;
-  font-family: 'DMSans', sans-serif;
-  font-size: 1rem;
-  outline: none;
-  transition: background-color 0.2s;
-}
-
-.transaction-history-search-input:focus {
-  background-color: #ebebeb;
-}
-
-.transaction-history-search-input::placeholder {
-  color: #666;
-}
-
-/* Icon button styles - similar to invite buddy implementation */
-.transaction-history-icon-btn {
-  width: 3rem;
-  height: 3rem;
-  flex: 0 0 3rem;
-  padding: 0;
-  border-radius: 50%;
-  border: none;
-  background-color: #f5f5f5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0. 3s;
-  flex-shrink: 0;
-  color: #1a1a1a;
-}
-
-.transaction-history-icon-btn:hover {
-  background-color: #06D2CA;
-  color: #ffffff;
-}
-
-.transaction-history-search-icon-btn {
-  position: static;
-}
-
-.transaction-history-filters {
   display: flex;
   gap: 0.5rem;
 }
 
-.filter-tab {
-  padding: 0.5rem 1rem;
-  background-color: #f5f5f5;
+.transaction-history-search-container {
+  flex: 1;
+  position: relative;
+}
+
+.transaction-history-search-input {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  background-color: #f8f9fa;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  color: #495057;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box; /* Ensures padding doesn't overflow width */
+}
+
+.transaction-history-search-input:focus {
+  border-color: #06D2CA;
+  background-color: #fff;
+}
+
+.transaction-history-search-icon-btn {
+  background-color: #06D2CA;
   border: none;
-  border-radius: 20px;
-  font-family: 'DMSans', sans-serif;
-  font-size: 0.875rem;
+  border-radius: 12px;
+  width: 42px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.transaction-history-search-icon-btn:hover {
+  background-color: #05b2ab;
+}
+
+/* Filter Tabs (Segmented Control style) */
+.transaction-history-filters {
+  display: flex;
+  background-color: #f1f3f5;
+  padding: 4px;
+  border-radius: 12px;
+  gap: 4px;
+}
+
+.filter-tab {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 8px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
   font-weight: 600;
+  color: #868e96;
   cursor: pointer;
   transition: all 0.2s;
-  color: #666;
 }
 
 .filter-tab:hover {
-  background-color: #e0e0e0;
+  color: #495057;
 }
 
 .filter-tab.active {
-  background-color: #1a1a1a;
-  color: #fff;
+  background-color: #fff;
+  color: #1a1a1a;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
+/* 5. List Area */
 .transaction-history-list {
   flex: 1;
-  overflow-y: auto;
-  padding: 1rem 2rem 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  min-height: 300px;
+  overflow-y: auto; /* Scrollable */
+  padding: 0 1.5rem;
 }
 
+/* Scrollbar styling */
 .transaction-history-list::-webkit-scrollbar {
   width: 6px;
 }
-
 .transaction-history-list::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 3px;
+  background: transparent;
 }
-
 .transaction-history-list::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background-color: #e9ecef;
   border-radius: 3px;
 }
 
-.transaction-history-list::-webkit-scrollbar-thumb:hover {
-  background: #aaa;
-}
-
+/* Individual Item */
 .transaction-history-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.25rem;
-  background-color: #f9f9f9;
-  border-radius: 12px;
-  border: 1px solid #e8e8e8;
-  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 1rem 0;
+  border-bottom: 1px solid #f8f9fa;
+  transition: background-color 0.2s;
 }
 
-.transaction-history-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  text-align: center;
-  color: #888;
-  gap: 1rem;
-}
-
-.transaction-history-empty-icon {
-  color: #ccc;
-  margin-bottom: 0.5rem;
-}
-
-.transaction-history-empty-text {
-  font-family: 'DMSans', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #333;
-}
-
-.transaction-history-empty-subtext {
-  font-family: 'DMSans', sans-serif;
-  font-size: 0.9rem;
-  color: #888;
-  max-width: 280px;
-  line-height: 1.4;
-}
-
-.transaction-history-item:hover {
-  transform: translateX(4px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+.transaction-history-item:last-child {
+  border-bottom: none;
 }
 
 .transaction-history-info {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 4px;
 }
 
 .transaction-history-description {
-  font-family: 'DMSans', sans-serif;
-  font-size: 1rem;
   font-weight: 600;
-  color: #000;
+  color: #343a40;
+  font-size: 0.95rem;
 }
 
 .transaction-history-date {
-  font-family: 'DMSans', sans-serif;
-  font-size: 0. 8rem;
-  color: #888;
+  font-size: 0.75rem;
+  color: #adb5bd;
 }
 
+/* Amount Styling */
 .transaction-history-amount {
-  font-family: 'DMSans', sans-serif;
-  font-size: 1.1rem;
   font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
 }
 
-.transaction-history-amount .income {
-  color: #06d2ca;
+.transaction-history-amount.income {
+  color: #06D2CA; /* Your Income Color */
 }
 
 .transaction-history-amount.expense {
-  color: #D2060E;
+  color: #ff6b6b; /* Your Expense Color */
 }
 
-@media (max-width: 768px) {
-  .transaction-history-overlay {
-    padding: 1rem;
-  }
+/* 6. Empty State */
+.transaction-history-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #adb5bd;
+  height: 100%;
+}
 
+.transaction-history-empty-icon {
+  color: #dee2e6;
+  margin-bottom: 1rem;
+}
+
+.transaction-history-empty-text {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #868e96;
+  margin-bottom: 0.25rem;
+}
+
+.transaction-history-empty-subtext {
+  font-size: 0.85rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
   .transaction-history-modal {
-    max-height: 90vh;
-  }
-
-  .transaction-history-header {
-    padding: 1rem 1.5rem;
-  }
-
-  .transaction-history-title {
-    font-size: 1. 5rem;
-  }
-
-  .transaction-history-controls {
-    padding: 1rem 1.5rem;
-  }
-
-  .transaction-history-search-section {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .transaction-history-search-container {
-    width: 100%;
-  }
-
-  .transaction-history-list {
-    padding: 1rem 1.5rem;
+    height: 100vh;
+    border-radius: 0;
+    max-width: none;
   }
 }

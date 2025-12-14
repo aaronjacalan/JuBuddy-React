@@ -10,7 +10,7 @@ function Navigation({ activeItem }: NavigationProps) {
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Transactions', path: '/transactions' },
-    { name: 'Virtual Jar', path: '/virtual-jar' },
+    { name: 'Item Wishlist', path: '/virtual-jar' },
     { name: 'Goals', path: '/goals' },
     { name: 'Buddies', path: '/buddies' }
   ];

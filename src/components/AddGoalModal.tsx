@@ -1,129 +1,113 @@
-import React from 'react';
+import { useState } from 'react';
 import './AddGoalModal.css';
 
 interface AddGoalModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (goal: any) => void;
+  onSave: (data: any) => void;
 }
 
-function AddGoalModal({ isOpen, onClose, onSave }: AddGoalModalProps) {
-  if (!isOpen) return null;
+const AddGoalModal = ({ isOpen, onClose, onSave }: AddGoalModalProps) => {
+  const [name, setName] = useState('');
+  const [targetAmount, setTargetAmount] = useState('');
+  const [targetDate, setTargetDate] = useState('');
+  const [description, setDescription] = useState('');
+  const [error, setError] = useState('');
 
-  const [goalName, setGoalName] = React.useState('');
-  const [goalDesc, setGoalDesc] = React.useState('');
-  const [startDate, setStartDate] = React.useState('');
-  const [endDate, setEndDate] = React.useState('');
+  if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const goal = {
-      goalName,
-      goalDesc,
-      startDate,
-      endDate
-    };
+    setError('');
 
-    onSave(goal);
-    onClose();
-    
-    // Reset form
-    setGoalName('');
-    setGoalDesc('');
-    setStartDate('');
-    setEndDate('');
-  };
+    if (!name.trim()) return setError('Goal name is required');
+    if (!targetAmount || parseFloat(targetAmount) <= 0) return setError('Please enter a valid amount');
+    if (!targetDate) return setError('Target date is required');
 
-  const handleClose = () => {
-    // Reset form before closing
-    setGoalName('');
-    setGoalDesc('');
-    setStartDate('');
-    setEndDate('');
+    onSave({
+      name,
+      targetAmount,
+      targetDate,
+      description,
+      currentAmount: 0
+    });
+
+    setName('');
+    setTargetAmount('');
+    setTargetDate('');
+    setDescription('');
     onClose();
   };
 
   return (
-    <div className="add-goal-modal-overlay" onClick={handleClose}>
-      <div className="add-goal-modal" onClick={(e) => e.stopPropagation()}>
-        <div className="add-goal-modal-header">
-          <h2 className="add-goal-title">Add New Goal</h2>
+    <div className="add-goal-overlay">
+      <div className="add-goal-card">
+        <div className="add-goal-header">
+          <h2>Add New Goal</h2>
+          <button onClick={onClose} className="add-goal-close">&times;</button>
         </div>
 
-        <form onSubmit={handleSubmit} className="add-goal-form">
-          <div className="add-goal-form-content">
-            <div className="add-goal-two-column-layout">
-              {/* Left Column - Goal Name and Dates */}
-              <div className="add-goal-left-column">
-                {/* Goal Name */}
-                <div className="add-goal-section">
-                  <label className="add-goal-label">Goal Name</label>
-                  <input 
-                    type="text" 
-                    value={goalName} 
-                    onChange={(e) => setGoalName(e.target.value)}
-                    placeholder="Enter goal name"
-                    className="add-goal-text-input"
-                    required
-                  />
-                </div>
-
-                {/* Start Date */}
-                <div className="add-goal-section">
-                  <label className="add-goal-label">Start Date</label>
-                  <input 
-                    type="date" 
-                    value={startDate} 
-                    onChange={(e) => setStartDate(e.target.value)}
-                    className="add-goal-date-input"
-                    required
-                  />
-                </div>
-
-                {/* End Date */}
-                <div className="add-goal-section">
-                  <label className="add-goal-label">End Date</label>
-                  <input 
-                    type="date" 
-                    value={endDate} 
-                    onChange={(e) => setEndDate(e.target.value)}
-                    className="add-goal-date-input"
-                    required
-                  />
-                </div>
+        <form onSubmit={handleSubmit} className="add-goal-body">
+          {error && <div style={{color:'red', fontWeight:'bold'}}>{error}</div>}
+          
+          <div className="add-goal-columns">
+            <div className="add-goal-col-left">
+              <div className="add-goal-field">
+                <label>Goal Name</label>
+                <input 
+                  type="text" 
+                  className="add-goal-input-styled" 
+                  placeholder="e.g., New Laptop" 
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
               </div>
 
-              {/* Right Column - Goal Description */}
-              <div className="add-goal-right-column">
-                <div className="add-goal-section">
-                  <label className="add-goal-label">Goal Description</label>
-                  <textarea 
-                    value={goalDesc} 
-                    onChange={(e) => setGoalDesc(e.target.value)}
-                    placeholder="Describe your goal in detail"
-                    className="add-goal-textarea"
-                    rows={12}
-                    required
-                  />
-                </div>
+              <div className="add-goal-field">
+                <label>Target Amount (₱)</label>
+                <input 
+                  type="number" 
+                  className="add-goal-input-styled" 
+                  placeholder="0.00" 
+                  min="0"
+                  step="0.01"
+                  value={targetAmount}
+                  onChange={(e) => setTargetAmount(e.target.value)}
+                />
+              </div>
+
+              <div className="add-goal-field">
+                <label>Target Date</label>
+                <input 
+                  type="date" 
+                  className="add-goal-input-styled" 
+                  value={targetDate}
+                  onChange={(e) => setTargetDate(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="add-goal-col-right">
+              <div className="add-goal-field" style={{height:'100%'}}>
+                <label>Description (Optional)</label>
+                <textarea 
+                  className="add-goal-textarea-styled" 
+                  placeholder="What are you saving for?" 
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
               </div>
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="add-goal-actions">
-            <button type="button" onClick={handleClose} className="add-goal-cancel-btn">
-              Cancel
-            </button>
-            <button type="submit" className="add-goal-save-btn">
-              Add Goal
-            </button>
+          <div className="add-goal-footer">
+            <button type="button" onClick={onClose} className="add-goal-btn-cancel">Cancel</button>
+            <button type="submit" className="add-goal-btn-save">Save Goal</button>
           </div>
         </form>
       </div>
     </div>
   );
-}
+};
 
 export default AddGoalModal;

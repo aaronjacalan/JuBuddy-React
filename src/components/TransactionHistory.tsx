@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './TransactionHistory.css';
 
 interface Transaction {
@@ -13,36 +13,47 @@ interface Transaction {
 interface TransactionHistoryProps {
   isOpen: boolean;
   onClose: () => void;
-  transactions?: Transaction[];
 }
 
-function TransactionHistory({ isOpen, onClose, transactions }: TransactionHistoryProps) {
+function TransactionHistory({ isOpen, onClose }: TransactionHistoryProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [appliedSearchTerm, setAppliedSearchTerm] = useState('');
   const [filterType, setFilterType] = useState<'all' | 'expense' | 'income'>('all');
+  
+  // 1. STATE: Store the list of fetched transactions
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  // Sample transactions if none provided
-  const sampleTransactions: Transaction[] = Array.from({ length: 25 }). map((_, index) => ({
-    id: index,
-    description: index % 8 === 0 ? 'Grocery Shopping' :
-                 index % 8 === 1 ? 'Gas Station' :
-                 index % 8 === 2 ? 'Coffee Shop' :
-                 index % 8 === 3 ?  'Online Purchase' :
-                 index % 8 === 4 ?  'Restaurant Bill' :
-                 index % 8 === 5 ?  'Salary Deposit' :
-                 index % 8 === 6 ? 'Freelance Payment' :
-                 'Investment Dividend',
-    amount: (index % 8 < 5 ? -1 : 1) * (100 + (index * 100) % 5000),
-    type: index % 8 < 5 ?  'expense' : 'income',
-    date: new Date(Date.now() - index * 86400000).toLocaleDateString(),
-    category: index % 8 < 5 ?  'Expense' : 'Income'
-  }));
+  // 2. FETCH: Get data from Django when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      fetchHistory();
+    }
+  }, [isOpen]);
 
-  const displayTransactions = transactions || sampleTransactions;
+  const fetchHistory = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('http://127.0.0.1:8000/transaction/api/history/');
+      if (response.ok) {
+        const data = await response.json();
+        setTransactions(data);
+      } else {
+        console.error("Failed to fetch history");
+      }
+    } catch (error) {
+      console.error("Error connecting to server:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const filteredTransactions = displayTransactions.filter(t => {
+  // 3. FILTERING LOGIC (Applied to the fetched data)
+  const filteredTransactions = transactions.filter(t => {
     const searchLower = appliedSearchTerm.toLowerCase();
     const matchesSearch = !searchLower || t.description.toLowerCase().includes(searchLower);
+    
+    // Check if type matches (React uses 'income'/'expense', make sure API matches)
     const matchesFilter = filterType === 'all' || t.type === filterType;
     return matchesSearch && matchesFilter;
   });
@@ -68,7 +79,7 @@ function TransactionHistory({ isOpen, onClose, transactions }: TransactionHistor
                 type="text"
                 placeholder="Search transactions..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e. target.value)}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="transaction-history-search-input"
               />
             </div>
@@ -105,7 +116,9 @@ function TransactionHistory({ isOpen, onClose, transactions }: TransactionHistor
         </div>
 
         <div className="transaction-history-list">
-          {filteredTransactions.length === 0 ? (
+          {loading ? (
+            <div className="transaction-history-empty">Loading...</div>
+          ) : filteredTransactions.length === 0 ? (
             <div className="transaction-history-empty">
               <div className="transaction-history-empty-icon">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
@@ -114,21 +127,18 @@ function TransactionHistory({ isOpen, onClose, transactions }: TransactionHistor
                 </svg>
               </div>
               <div className="transaction-history-empty-text">
-                {appliedSearchTerm || filterType !== 'all' ? 'No transactions found' : 'No transactions available'}
-              </div>
-              <div className="transaction-history-empty-subtext">
-                {appliedSearchTerm ? `No results for "${appliedSearchTerm}"` : filterType !== 'all' ? `No ${filterType} transactions` : 'Add some transactions to get started'}
+                {appliedSearchTerm || filterType !== 'all' ? 'No transactions found' : 'No transactions yet'}
               </div>
             </div>
           ) : (
-            filteredTransactions. map((transaction) => (
+            filteredTransactions.map((transaction) => (
               <div key={transaction.id} className="transaction-history-item">
                 <div className="transaction-history-info">
                   <div className="transaction-history-description">{transaction.description}</div>
                   <div className="transaction-history-date">{transaction.date}</div>
                 </div>
                 <div className={`transaction-history-amount ${transaction.type}`}>
-                  {transaction.type === 'income' ? '+' : ''}₱{Math.abs(transaction. amount).toLocaleString('en-PH', {
+                  {transaction.type === 'income' ? '+' : '-'}₱{Math.abs(transaction.amount).toLocaleString('en-PH', {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                   })}

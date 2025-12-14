@@ -1,0 +1,37 @@
+@font-face {
+  font-family: 'DMSans';
+  src: url('../assets/DMSans_VariableFont.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+.funds-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+  display: flex; justify-content: center; align-items: center; z-index: 3000;
+}
+
+.funds-modal-card {
+  background: white; padding: 2rem; border-radius: 20px; width: 90%; max-width: 400px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2); animation: popIn 0.2s ease-out;
+}
+
+@keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.funds-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.funds-modal-header h3 { margin: 0; font-family: 'DMSans', sans-serif; font-size: 1.25rem; font-weight: 700; }
+.funds-close-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #999; }
+
+.funds-input-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+.funds-input-group label { font-family: 'DMSans', sans-serif; font-weight: 600; font-size: 0.9rem; }
+.funds-input { 
+  padding: 0.875rem; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 1rem; outline: none; font-family: 'DMSans', sans-serif;
+}
+.funds-input:focus { border-color: #06D2CA; }
+
+.funds-error { color: #e53e3e; font-size: 0.85rem; margin-bottom: 1rem; font-family: 'DMSans', sans-serif; }
+
+.funds-actions { display: flex; gap: 1rem; }
+.funds-btn-cancel { flex: 1; padding: 0.875rem; background: #f3f4f6; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; color: #4b5563; font-family: 'DMSans', sans-serif; }
+.funds-btn-save { flex: 1; padding: 0.875rem; background: #06D2CA; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; color: white; font-family: 'DMSans', sans-serif; }
+.funds-btn-save:hover { background: #05b2ab; }

@@ -4,6 +4,18 @@
   font-style: normal;
 }
 
+/* --- NEW: Title Styling (Fixes the lowercase issue) --- */
+.column-title {
+  font-family: 'DMSans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #888;          
+  margin-bottom: 1rem;
+  text-transform: capitalize !important; /* <--- Forces "Recent Expenses" */
+  letter-spacing: 0.5px;
+}
+
+/* --- 1. Main Balance Card --- */
 .dashboard-column.half-width.home-balance-card {
   background: #1a1a1a;
   border-radius: 12px;
@@ -19,6 +31,7 @@
   align-items: center;
   overflow: hidden;
   gap: 0.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-column.half-width.home-balance-card .home-balance-label {
@@ -30,6 +43,8 @@
   letter-spacing: 0.5px;
   text-align: left;
   width: 100%;
+  color: #fff;
+  opacity: 0.8;
 }
 
 .dashboard-column.half-width.home-balance-card .home-balance-amount {
@@ -45,6 +60,7 @@
   font-size: 1.5rem;
   padding-right: 0.2rem;
   font-weight: 1000;
+  color: #06D2CA;
 }
 
 .dashboard-column.half-width.home-balance-card .home-balance-amount-value {
@@ -52,13 +68,120 @@
   font-size: 3rem;
   font-weight: 1000;
   letter-spacing: -0.5px;
+  color: #fff;
 }
 
-/* Responsive design for balance card */
+/* --- 2. General Card Lists --- */
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  overflow-y: auto;
+  padding-right: 5px;
+  max-height: 100%;
+}
+
+.card-list::-webkit-scrollbar {
+  width: 5px;
+}
+.card-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.card-list::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 10px;
+}
+
+/* --- 3. Dashboard Cards --- */
+.dashboard-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #f1f1f1;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  overflow: hidden;
+}
+
+.card-title {
+  font-family: 'DMSans', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #2d3436;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-subtitle {
+  font-family: 'DMSans', sans-serif;
+  font-size: 0.75rem;
+  color: #a0aec0;
+  font-weight: 500;
+}
+
+.card-amount {
+  font-family: 'DMSans', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #2d3436;
+  white-space: nowrap;
+}
+
+.card-amount.negative {
+  color: #ff6b6b;
+}
+
+/* --- 4. Pinned Items --- */
+.dashboard-card.pinned-card {
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+}
+
+.dashboard-card.pinned-card .card-title {
+  color: #ffffff;
+}
+
+.dashboard-card.pinned-card .card-subtitle {
+  color: #888;
+}
+
+.dashboard-card.pinned-card .card-amount {
+  color: #06D2CA;
+}
+
+/* --- 5. Empty State --- */
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: #a0aec0;
+  font-family: 'DMSans', sans-serif;
+  font-size: 0.9rem;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  border: 1px dashed #cbd5e0;
+}
+
+/* --- Responsive --- */
 @media (max-width: 768px) {
   .dashboard-column.half-width.home-balance-card {
     padding: 0.5rem;
-    min-height: 9.375rem;
+    min-height: 8rem;
   }
 
   .dashboard-column.half-width.home-balance-card .home-peso-sign {
@@ -66,6 +189,11 @@
   }
 
   .dashboard-column.half-width.home-balance-card .home-balance-amount-value {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
+  
+  .dashboard-card {
+    padding: 0.75rem;
+  }
+  
 }
