@@ -2,10 +2,16 @@ import { useState, useRef, useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import SettingsItem from '../components/SettingsItem';
 import AccountSettings from '../components/AccountSettings';
+import LogoutModal from '../components/LogoutModal';
 import './Settings.css';
 
-function Settings() {
+interface SettingsProps {
+  onLogout: () => void;
+}
+
+function Settings({ onLogout }: SettingsProps) {
   const [activeTab, setActiveTab] = useState(0);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -18,49 +24,11 @@ function Settings() {
   ];
 
   const sections = [
-    // Account section - rendered as AccountSettings component (includes Change Password)
-    {
-      id: 'account',
-      title: 'Account Settings',
-      items: []
-    },
-    {
-      id: 'security',
-      title: 'Security Settings',
-      items: [
-        'Two-Factor Authentication',
-        'Login Activity',
-        'Privacy Settings',
-        'Session Management'
-      ]
-    },
-    {
-      id: 'notifications',
-      title: 'Notification Preferences',
-      items: [
-        'Email Notifications',
-        'Push Notifications',
-        'SMS Alerts'
-      ]
-    },
-    {
-      id: 'connected-cards',
-      title: 'Connected Accounts',
-      items: [
-        'Link Credit Card',
-        'Connect Bank Account',
-        'Manage Payment Methods'
-      ]
-    },
-    {
-      id: 'site-settings',
-      title: 'Site Preferences',
-      items: [
-        'Language Settings',
-        'Theme Preferences',
-        'Display Options'
-      ]
-    }
+    { id: 'account', title: 'Account Settings', items: [] },
+    { id: 'security', title: 'Security Settings', items: ['Two-Factor Authentication', 'Login Activity', 'Privacy Settings', 'Session Management'] },
+    { id: 'notifications', title: 'Notification Preferences', items: ['Email Notifications', 'Push Notifications', 'SMS Alerts'] },
+    { id: 'connected-cards', title: 'Connected Accounts', items: ['Link Credit Card', 'Connect Bank Account', 'Manage Payment Methods'] },
+    { id: 'site-settings', title: 'Site Preferences', items: ['Language Settings', 'Theme Preferences', 'Display Options'] }
   ];
 
   const scrollToSection = (index: number) => {
@@ -81,7 +49,7 @@ function Settings() {
 
   useEffect(() => {
     const content = contentRef.current;
-    if (! content) return;
+    if (!content) return;
 
     const handleScroll = () => {
       const containerRect = content.getBoundingClientRect();
@@ -93,23 +61,18 @@ function Settings() {
       
       sectionRefs.current.forEach((section, index) => {
         if (!section) return;
-        
         const sectionRect = section.getBoundingClientRect();
-        const sectionCenter = sectionRect. top - containerTop + sectionRect.height / 2;
+        const sectionCenter = sectionRect.top - containerTop + sectionRect.height / 2;
         const distance = Math.abs(sectionCenter - viewportCenter);
-        
         if (distance < closestDistance) {
           closestDistance = distance;
           closestIndex = index;
         }
       });
-
       setActiveTab(closestIndex);
     };
 
-    // Initial check
     handleScroll();
-    
     content.addEventListener('scroll', handleScroll);
     return () => content.removeEventListener('scroll', handleScroll);
   }, []);
@@ -117,6 +80,11 @@ function Settings() {
   return (
     <div className="settings-container">
       <Navigation activeItem="Settings" />
+      
+      <LogoutModal
+        isOpen={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+      />
       
       <div className="settings-layout">
         <aside className="settings-sidebar">
@@ -129,23 +97,20 @@ function Settings() {
               {tab}
             </button>
           ))}
-          <button className="settings-logout-button" onClick={() => {
-            // Handle logout logic here
-            console. log('Logout clicked');
-          }}>
+          <button className="settings-logout-button" onClick={onLogout}>
             Logout
           </button>
         </aside>
         
         <main className="settings-content" ref={contentRef}>
-          {sections. map((section, sectionIndex) => (
+          {sections.map((section, sectionIndex) => (
             <div 
               key={section.id} 
               className={`settings-section ${sectionIndex === 0 ? 'account-section' : ''}`}
               ref={(el) => { sectionRefs.current[sectionIndex] = el; }}
               id={section.id}
             >
-              {sectionIndex === 0 ?  (
+              {sectionIndex === 0 ? (
                 <AccountSettings />
               ) : (
                 <>

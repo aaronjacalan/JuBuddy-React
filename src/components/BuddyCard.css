@@ -6,14 +6,22 @@
 }
 
 .buddy-card {
-  background-color: #1a1a1a;
-  border-radius: 15px;
-  padding: 1.5rem;
-  color: #fff;
+  background-color: #FFFFFF;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 1.25rem;
+  color: #333;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   font-family: 'DMSans', sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.buddy-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .buddy-card-header {
@@ -23,47 +31,82 @@
 }
 
 .buddy-avatar {
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex-shrink: 0;
 }
 
+.avatar-letter {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
 .buddy-name {
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: 700;
   font-family: 'DMSans', sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.buddy-connection-date {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: -0.5rem;
+    font-weight: 500;
+}
+
+.shared-data-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #666;
+    margin-top: 0.5rem;
+    margin-bottom: -0.25rem;
 }
 
 .buddy-content-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: 0.75rem;
-  padding: 0.5rem;
-  margin-top: 0.5rem;
-  min-height: 200px;
+  padding: 0;
+  margin-top: 0;
+  min-height: auto;
 }
 
-.content-placeholder {
-  background-color: #333;
-  border: 1px solid #555;
+.buddy-data-item {
+  background-color: #E8E8E8;
   border-radius: 8px;
-  /* aspect-ratio: 1; */
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
-  min-height: 40px;
+  padding: 0.75rem;
+  text-align: center;
 }
 
-.content-placeholder::before {
-  content: '×';
-  color: #888;
-  font-size: 1.5rem;
-  font-weight: bold;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(45deg);
+.data-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
 }
 
+.data-name {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #333;
+    line-height: 1.2;
+}
+
+.empty-data-state {
+    grid-column: 1 / -1;
+    color: #999;
+    font-style: italic;
+    text-align: center;
+    padding: 1rem 0;
+}

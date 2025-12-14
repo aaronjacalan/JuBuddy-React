@@ -76,8 +76,13 @@
 }
 
 .monthly-report-column {
-  height: 100%;
-  min-height: calc(100vh - 175px);
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  min-height: calc(100vh - 175px); /* Keep the overall container height */
+  overflow: hidden; /* Prevent container overflow, content will scroll in its section */
+  padding: 0; /* Remove padding from the main column to allow sections to define it */
+  background-color: transparent; /* Make background transparent, sections will have it */
 }
 
 .column-title {
@@ -193,6 +198,82 @@
   overflow: hidden; /* Prevent container overflow */
 }
 
+.right-panel-section {  
+  background-color: #E8E8E8; /* Apply the background color here */
+  border-radius: 12px; /* Apply border radius here */
+  padding: 1rem; /* Apply padding here */
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.expenditure-section {
+  flex: 1; /* Allows this section to take up available vertical space */
+  overflow-y: auto; /* **Crucial:** Only this section will scroll */
+  margin-bottom: 1.5rem; /* Space between the two right-hand sections */
+}
+
+.goals-section {
+  flex-shrink: 0; /* Prevents this section from shrinking when expenditure scrolls */
+}
+
+.dashboard-card.report-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    height: 3.5rem; /* Explicit height for calculation */
+}
+
+.mini-goal-row {
+    display: grid; /* Use grid for better layout control */
+    grid-template-columns: 2fr 1fr; /* Info takes 2/3, Progress takes 1/3 */
+    align-items: center;
+    gap: 1rem; /* Gap between info and progress */
+    padding: 0.75rem 1rem; /* Reduced vertical padding */
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.mini-goal-info {
+    display: flex;
+    flex-direction: column; /* Stack name and days left vertically */
+    align-items: flex-start;
+    gap: 4px; /* Small gap between text elements */
+}
+
+.mini-goal-name { 
+    font-weight: 700; 
+    font-size: 0.9rem; /* Slightly smaller font */
+}
+
+.mini-goal-days { 
+    font-size: 0.65rem; /* Smaller font */
+    padding: 1px 6px; 
+}
+
+/* Progress wrapper stays the same, acting as the second column in the grid */
+.mini-goal-progress-wrapper {
+    margin-top: 0; /* Remove top margin since it's now vertically aligned */
+}
+
+/* Calculate max-height for 3 cards: (3 * 3.5rem card height) + (2 * 0.5rem gap) */
+.expenditure-scroll-container {
+    max-height: calc(3 * 3.5rem + 2 * 0.5rem + 0.5rem); /* ~11.5rem total */
+    overflow-y: auto;
+    padding-right: 0.5rem; /* Add padding for scrollbar visibility */
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* Card gap defined here */
+}
+
+
+
 /* Responsive design */
 @media (max-width: 1024px) {
   .dashboard-grid {
@@ -226,5 +307,16 @@
 
   .dashboard-column {
     padding: 1rem;
+  }
+
+  .monthly-report-column {
+    min-height: auto;
+    height: auto;
+    gap: 1.5rem; /* Add gap between the two sections on mobile */
+  }
+
+  .expenditure-section {
+    overflow-y: visible; /* Disable scrolling on mobile */
+    margin-bottom: 0;
   }
 }

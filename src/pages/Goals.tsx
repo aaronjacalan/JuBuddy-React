@@ -12,7 +12,8 @@ interface GoalData {
   targetValue: number;
   actualValue: number;
   targetDate: string;
-  status: 'active' | 'completed' | 'paused' | 'cancelled';
+  // Updated status type to include 'expired'
+  status: 'active' | 'completed' | 'paused' | 'cancelled' | 'expired';
   progress_percentage: number;
 }
 
@@ -29,7 +30,6 @@ function Goals() {
   const [fundsMode, setFundsMode] = useState<'add' | 'reduce'>('add');
   const [selectedGoal, setSelectedGoal] = useState<GoalData | null>(null);
 
-  // --- Helpers & Fetch (Same as before) ---
   const calculateDaysLeft = (targetDateStr: string): number => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -40,27 +40,54 @@ function Goals() {
 
   const fetchGoals = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/goals/api/list/');
-      if (response.ok) setGoals(await response.json());
+      const savedUser = localStorage.getItem('jubuddy_user');
+      if (!savedUser) return;
+      const user = JSON.parse(savedUser);
+
+      const response = await fetch(`http://127.0.0.1:8000/goals/api/list/?user_id=${user.id}`);
+      if (response.ok) {
+        const data = await response.json();
+        if(Array.isArray(data)) setGoals(data);
+      }
     } catch (error) { console.error("Failed to fetch goals", error); }
   };
 
   useEffect(() => { fetchGoals(); }, []);
 
-  // --- Actions (Save, Delete, Cancel, MarkComplete, Pause, ClearHistory same as before) ---
   const handleSaveGoal = async (goalFormData: any) => {
     try {
+      const savedUser = localStorage.getItem('jubuddy_user');
+      if (!savedUser) {
+          alert("User not logged in!");
+          return;
+      }
+      const user = JSON.parse(savedUser);
+
       const payload = {
+        user_id: user.id, 
         name: goalFormData.name,
         description: goalFormData.description || "",
         targetValue: parseFloat(goalFormData.targetAmount),
         targetDate: goalFormData.targetDate
       };
+
       const response = await fetch('http://127.0.0.1:8000/goals/api/add/', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify(payload),
       });
-      if (response.ok) { fetchGoals(); setIsAddGoalModalOpen(false); }
-    } catch (error) { console.error("Error", error); }
+
+      const data = await response.json(); 
+
+      if (response.ok) { 
+          fetchGoals(); 
+          setIsAddGoalModalOpen(false); 
+      } else {
+          alert(`Failed to save: ${data.error || "Unknown error"}`);
+      }
+    } catch (error) { 
+        alert("Network connection failed.");
+    }
   };
 
   const handleDelete = async (id: number) => {
@@ -86,8 +113,12 @@ function Goals() {
   };
 
   const handleTogglePause = async (goal: GoalData) => {
+    // If it's expired, we probably shouldn't allow pausing, but we'll leave logic flexible
     const newStatus = goal.status === 'active' ? 'paused' : 'active';
+    
+    // Optimistic update
     setGoals(goals.map(g => g.goalID === goal.goalID ? {...g, status: newStatus} : g));
+    
     await fetch(`http://127.0.0.1:8000/goals/api/update/${goal.goalID}/`, {
       method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: newStatus })
     });
@@ -102,7 +133,6 @@ function Goals() {
     fetchGoals();
   };
 
-  // --- Funds Logic ---
   const openFundsModal = (goal: GoalData, mode: 'add' | 'reduce') => {
     setSelectedGoal(goal);
     setFundsMode(mode);
@@ -120,9 +150,7 @@ function Goals() {
       if (newTotal < 0) newTotal = 0; 
     }
 
-    // Double check: Prevent adding beyond target in frontend just in case
     if (fundsMode === 'add' && newTotal > selectedGoal.targetValue) {
-        // Just cap it to target or show error (Logic handled in modal already, but safe to keep)
         newTotal = selectedGoal.targetValue;
     }
 
@@ -138,9 +166,12 @@ function Goals() {
     } catch (error) { alert("Connection Error"); }
   };
 
-  // --- Filtering ---
   const filteredGoals = useMemo(() => {
-    const visibleGoals = goals.filter(g => g.status === 'active' || g.status === 'paused');
+    // Show Active, Paused, AND Expired goals in the main list
+    const visibleGoals = goals.filter(g => 
+        g.status === 'active' || g.status === 'paused' || g.status === 'expired'
+    );
+    
     if (!searchInput.trim()) return visibleGoals;
     const query = searchInput.toLowerCase();
     return visibleGoals.filter(goal => goal.name.toLowerCase().includes(query) || goal.description.toLowerCase().includes(query));
@@ -149,6 +180,7 @@ function Goals() {
   const pinnedGoals = useMemo(() => {
     return [...goals]
       .map(g => ({ ...g, daysLeft: calculateDaysLeft(g.targetDate) }))
+      // Only pin ACTIVE goals that aren't expired yet
       .filter(g => g.status === 'active' && g.daysLeft >= 0)
       .sort((a, b) => a.daysLeft - b.daysLeft)
       .slice(0, 3);
@@ -165,7 +197,6 @@ function Goals() {
         <div className="left-panel">
           <h2 className="section-title">Upcoming Deadlines</h2>
           <div className="pinned-goals-list">
-            {/* Logic to show message if empty, otherwise map the 3 goals */}
             {pinnedGoals.length === 0 ? (
                 <div style={{color: '#999', fontStyle: 'italic', padding: '1rem', fontFamily: 'DMSans'}}>
                     No upcoming deadlines.
@@ -221,33 +252,48 @@ function Goals() {
                     const days = calculateDaysLeft(goal.targetDate);
                     const isFull = goal.actualValue >= goal.targetValue;
                     const isPaused = goal.status === 'paused';
+                    
+                    // Determine if expired based on DB status OR calculation
+                    const isExpired = goal.status === 'expired' || (days < 0 && goal.status !== 'completed');
 
                     return (
                       <div key={goal.goalID} className="goal-item-row" style={isPaused ? {opacity: 0.7, backgroundColor: '#f9f9f9'} : {}}>
                         <div className="goal-info-block">
                            <span className="goal-name">{goal.name}</span>
-                           <span className="goal-status" style={isPaused ? {color: '#dd6b20'} : {}}>
-                             {isPaused ? 'PAUSED' : (days < 0 ? 'OVERDUE' : `${days} DAYS LEFT`)}
+                           
+                           {/* Status Badge */}
+                           <span 
+                             className="goal-status" 
+                             style={
+                               isPaused ? {color: '#dd6b20'} : 
+                               isExpired ? {color: '#e53e3e', fontWeight: 'bold'} : 
+                               {}
+                             }
+                           >
+                             {isPaused ? 'PAUSED' : (isExpired ? 'EXPIRED' : `${days} DAYS LEFT`)}
                            </span>
                         </div>
+                        
                         <div className="goal-progress-block">
                            <div className="progress-labels">
-                              <span>{goal.progress_percentage}%</span>
-                              <span style={{color:'#a0aec0'}}>₱{goal.actualValue.toLocaleString()} / ₱{goal.targetValue.toLocaleString()}</span>
+                             <span>{goal.progress_percentage}%</span>
+                             <span style={{color:'#a0aec0'}}>₱{goal.actualValue.toLocaleString()} / ₱{goal.targetValue.toLocaleString()}</span>
                            </div>
                            <div className="goal-progress-track">
-                              <div className="goal-progress-fill" style={{ 
-                                width: `${goal.progress_percentage}%`,
-                                backgroundColor: isPaused ? '#cbd5e0' : '#06D2CA'
-                              }}></div>
+                             <div className="goal-progress-fill" style={{ 
+                               width: `${goal.progress_percentage}%`,
+                               // Grey if paused, Red if expired, Teal otherwise
+                               backgroundColor: isPaused ? '#cbd5e0' : (isExpired ? '#e53e3e' : '#06D2CA')
+                             }}></div>
                            </div>
                         </div>
+                        
                         <div className="goal-actions-block">
                            
                            {/* SAVINGS GROUP */}
                            <div className="savings-actions-group">
                                
-                               {/* REDUCE (Always visible) */}
+                               {/* REDUCE (Always visible, even if expired, you might want to withdraw money) */}
                                <button 
                                   className="reduce-funds-btn" 
                                   disabled={isPaused}
@@ -260,26 +306,31 @@ function Goals() {
                                {/* TOGGLE: Add vs Mark Complete */}
                                {isFull ? (
                                  <button 
-                                    className="add-funds-btn" 
-                                    style={{backgroundColor: '#48bb78'}} 
-                                    onClick={() => handleMarkComplete(goal)}
+                                   className="add-funds-btn" 
+                                   style={{backgroundColor: '#48bb78'}} 
+                                   onClick={() => handleMarkComplete(goal)}
                                  >
                                    Mark Complete
                                  </button>
                                ) : (
                                  <button 
                                     className="add-funds-btn" 
-                                    disabled={isPaused} 
+                                    // Disable adding funds if Paused OR Expired
+                                    disabled={isPaused || isExpired} 
                                     onClick={() => openFundsModal(goal, 'add')}
+                                    style={isExpired ? {backgroundColor: '#cbd5e0', cursor: 'not-allowed'} : {}}
                                  >
-                                   Add Savings
+                                    Add Savings
                                  </button>
                                )}
                            </div>
 
-                           <button className={`pause-goal-btn ${isPaused ? 'is-paused' : ''}`} onClick={() => handleTogglePause(goal)} title={isPaused ? "Resume" : "Pause"}>
-                              {isPaused ? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> : <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>}
-                           </button>
+                           {/* Pause Button (Hide if expired) */}
+                           {!isExpired && (
+                               <button className={`pause-goal-btn ${isPaused ? 'is-paused' : ''}`} onClick={() => handleTogglePause(goal)} title={isPaused ? "Resume" : "Pause"}>
+                                  {isPaused ? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> : <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>}
+                               </button>
+                           )}
 
                            <button className="desc-goal-btn" onClick={() => { setSelectedGoal(goal); setIsDescModalOpen(true); }} title="Description">
                               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
@@ -301,10 +352,6 @@ function Goals() {
 
       <AddGoalModal isOpen={isAddGoalModalOpen} onClose={() => setIsAddGoalModalOpen(false)} onSave={handleSaveGoal} />
       
-      {/* IMPORTANT: Calculating dynamic maxLimit 
-          If mode is 'reduce': limit is ACTUAL value (what you have saved).
-          If mode is 'add': limit is TARGET - ACTUAL (what is left to save).
-      */}
       <FundsModal 
         isOpen={isFundsModalOpen} 
         onClose={() => setIsFundsModalOpen(false)} 

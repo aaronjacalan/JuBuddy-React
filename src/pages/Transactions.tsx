@@ -15,7 +15,6 @@ interface DashboardData {
 }
 
 function Transactions() {
-  // 1. Dashboard State
   const [dashboardData, setDashboardData] = useState<DashboardData>({
     currentBalance: 0,
     monthlyExpenses: 0,
@@ -24,16 +23,18 @@ function Transactions() {
     incomeChange: 0
   });
 
-  // 2. Refresh Signal State (This tells the chart to update)
   const [refreshTrigger, setRefreshTrigger] = useState(0);
-
   const [isAddTransactionModalOpen, setIsAddTransactionModalOpen] = useState(false);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
 
-  // Fetch Dashboard Totals
   const fetchDashboardData = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/transaction/api/dashboard/');
+      const savedUser = localStorage.getItem('jubuddy_user');
+      if (!savedUser) return;
+      const user = JSON.parse(savedUser);
+
+      // UPDATED: Added user_id param
+      const response = await fetch(`http://127.0.0.1:8000/transaction/api/dashboard/?user_id=${user.id}`);
       if (response.ok) {
         const data = await response.json();
         setDashboardData(data);
@@ -54,10 +55,14 @@ function Transactions() {
   const openHistoryModal = () => setIsHistoryModalOpen(true);
   const closeHistoryModal = () => setIsHistoryModalOpen(false);
 
-  // SAVE FUNCTION
   const handleSaveTransaction = async (transactionData: any) => {
     try {
+      const savedUser = localStorage.getItem('jubuddy_user');
+      if (!savedUser) return;
+      const user = JSON.parse(savedUser);
+
       const payload = {
+        user_id: user.id, // UPDATED: Added user_id
         ...transactionData,
       };
 
@@ -74,13 +79,8 @@ function Transactions() {
       if (response.ok) {
         alert('Transaction added successfully!');
         closeAddTransactionModal();
-        
-        // 1. Refresh the Totals (Balance/Income/Expense cards)
         fetchDashboardData();
-        
-        // 2. Refresh the Chart (Increment the trigger)
         setRefreshTrigger(prev => prev + 1);
-        
       } else {
         alert('Error saving: ' + result.error);
       }
@@ -144,7 +144,6 @@ function Transactions() {
             </div>
           </div>
           
-          {/* PASS THE TRIGGER TO THE CHART */}
           <StatisticsChart refreshTrigger={refreshTrigger} />
         </div>
       </div>

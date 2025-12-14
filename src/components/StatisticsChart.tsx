@@ -31,7 +31,14 @@ const StatisticsChart = ({ refreshTrigger = 0 }: StatisticsChartProps) => {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/transaction/api/history/');
+        // 1. Get the current user
+        const savedUser = localStorage.getItem('jubuddy_user');
+        if (!savedUser) return;
+        const user = JSON.parse(savedUser);
+
+        // 2. Fetch specific user history using user_id
+        const response = await fetch(`http://127.0.0.1:8000/transaction/api/history/?user_id=${user.id}`);
+        
         if (response.ok) {
           const result = await response.json();
           setTransactions(result);
@@ -45,24 +52,19 @@ const StatisticsChart = ({ refreshTrigger = 0 }: StatisticsChartProps) => {
     fetchHistory();
   }, [refreshTrigger]);
 
-  // --- UPDATED LOGIC FOR SMOOTH TRANSITION ---
+  // --- CHART LOGIC ---
   const chartData = useMemo(() => {
     if (isLoading) return [];
     
     // Get actual days in the selected month
     const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
 
-    // FIXED: Always generate exactly 31 points.
-    // This ensures the SVG path always has the same number of nodes, 
-    // allowing CSS to "morph" the shape smoothly.
+    // Always generate exactly 31 points for smooth CSS transitions
     return Array.from({ length: 31 }, (_, i) => {
       const day = i + 1;
-      
-      // Check if this day actually exists in the selected month
       const isValidDay = day <= daysInMonth;
 
       if (!isValidDay) {
-        // Return 0 for non-existent days (like Feb 30) to maintain path structure
         return { day, income: 0, expense: 0, isValid: false };
       }
 
@@ -74,8 +76,9 @@ const StatisticsChart = ({ refreshTrigger = 0 }: StatisticsChartProps) => {
 
       return {
         day: day,
-        income: dayTrans.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0),
-        expense: dayTrans.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0),
+        // Ensure we compare types case-insensitively just in case
+        income: dayTrans.filter(t => t.type.toLowerCase() === 'income').reduce((sum, t) => sum + t.amount, 0),
+        expense: dayTrans.filter(t => t.type.toLowerCase() === 'expense').reduce((sum, t) => sum + t.amount, 0),
         isValid: true
       };
     });
@@ -196,7 +199,7 @@ const StatisticsChart = ({ refreshTrigger = 0 }: StatisticsChartProps) => {
 
           <div className="x-axis-labels">
             {chartData.map((d, index) => {
-              // Only show label if the day is valid AND (it's the 1st, 5th, 10th... or last valid day)
+              // Only show label if valid AND (1st, 5th, 10th... or last valid day)
               if (d.isValid && (d.day === 1 || d.day % 5 === 0)) {
                 const leftPos = (index / (chartData.length - 1)) * 100;
                 return (

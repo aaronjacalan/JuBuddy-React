@@ -127,6 +127,15 @@
   height: 100%;
 }
 
+/* NEW: Styles for Loading and Empty States */
+.invite-buddy-message {
+  text-align: center;
+  color: #999;
+  font-family: 'DMSans', sans-serif;
+  font-size: 1.1rem;
+  margin-top: 2rem;
+}
+
 /* Invite-buddy icon button styles */
 .invite-buddy-modal .invite-buddy-icon-btn {
   width: 3rem;

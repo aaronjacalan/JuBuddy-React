@@ -1,0 +1,135 @@
+@font-face {
+  font-family: 'DMSans';
+  src: url('../assets/DMSans_VariableFont.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+.logout-modal-overlay {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); 
+  z-index: 3000;
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.logout-modal-overlay.fade-out {
+  animation: fadeOut 0.2s ease-out;
+}
+
+.logout-modal-content {
+  background: white;
+  width: 90%;
+  max-width: 500px;
+  height: 90%;
+  max-height: 500px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: logoutFadeIn 0.2s ease-out;
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}
+
+@keyframes logoutFadeIn { from {
+  opacity: 0;
+  transform: scale(0.95); }
+  to {
+  opacity: 1;
+  transform: scale(1); } }
+
+@keyframes logoutFadeOut { from {
+  opacity: 1;
+  transform: scale(1); }
+  to {
+  opacity: 0;
+  transform: scale(0.95); } }
+
+@keyframes fadeIn { from {
+  opacity: 0; }
+  to {
+  opacity: 1; } }
+
+@keyframes fadeOut { from {
+  opacity: 1; }
+  to {
+  opacity: 0; } }
+
+.logout-modal-header {
+  padding: 1.5rem; 
+  border-bottom: 
+  1px solid #f0f0f0;
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+}
+
+.logout-modal-header h3 { 
+  margin: 0; 
+  font-family: 'DMSans', sans-serif; 
+  font-size: 1.25rem; 
+}
+
+.logout-close-btn { 
+  background: none; 
+  border: none; 
+  font-size: 1.5rem; 
+  cursor: pointer; 
+  color: #999; 
+}
+
+.logout-modal-body {
+  padding: 1.5rem;
+  text-align: center;
+}
+.logout-modal-body p {
+  margin: 0; 
+  font-size: 1rem; 
+  line-height: 1.6; 
+  color: #2d3748;
+  font-family: 'DMSans', sans-serif;
+}
+
+.logout-modal-footer {
+  padding: 1rem 1.5rem; 
+  background-color: #f8f9fa; 
+  border-top: 1px solid #f0f0f0;
+  display: flex; 
+  justify-content: space-between;
+}
+
+.logout-cancel-btn {
+  padding: 0.6rem 1.5rem; 
+  background-color: #f0f0f0; 
+  color: #2d3748;
+  border: none; 
+  border-radius: 10px; 
+  font-weight: 600; 
+  cursor: pointer;
+  font-family: 'DMSans', sans-serif;
+}
+.logout-cancel-btn:hover { 
+    background-color: #e0e0e0; 
+}
+
+.logout-confirm-btn {
+  padding: 0.6rem 1.5rem; 
+  background-color: #1a1a1a; 
+  color: white;
+  border: none; 
+  border-radius: 10px; 
+  font-weight: 600; 
+  cursor: pointer;
+  font-family: 'DMSans', sans-serif;
+}
+.logout-confirm-btn:hover { 
+    background-color: #333; 
+}

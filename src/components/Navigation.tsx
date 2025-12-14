@@ -8,7 +8,7 @@ interface NavigationProps {
 function Navigation({ activeItem }: NavigationProps) {
   const location = useLocation();
   const navItems = [
-    { name: 'Home', path: '/' },
+    { name: 'Home', path: '/home' },
     { name: 'Transactions', path: '/transactions' },
     { name: 'Item Wishlist', path: '/virtual-jar' },
     { name: 'Goals', path: '/goals' },
@@ -22,6 +22,7 @@ function Navigation({ activeItem }: NavigationProps) {
     const currentItem = navItems.find(item => item.path === currentPath);
     if (currentItem) return currentItem.name;
     if (currentPath === '/settings') return 'Settings';
+    if (currentPath === '/') return 'Home';
     return 'Home';
   };
 
@@ -30,7 +31,7 @@ function Navigation({ activeItem }: NavigationProps) {
   return (
     <header className="header">
       <div className="logo-section">
-        <Link to="/" className="logo">
+        <Link to="/home" className="logo">
           <span className="logo-text">JuBuddy</span>
         </Link>
       </div>

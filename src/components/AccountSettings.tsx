@@ -3,7 +3,7 @@ import './AccountSettings.css';
 
 function AccountSettings() {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null); // New: Store the actual file object
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   
   const [formData, setFormData] = useState({
     username: '',
@@ -49,17 +49,23 @@ function AccountSettings() {
     }
   };
 
+  // --- FETCH USER DATA ---
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/user/api/account/update/');
+        const savedUser = localStorage.getItem('jubuddy_user');
+        if (!savedUser) return;
+        const user = JSON.parse(savedUser);
+
+        // Fetch using user_id
+        const response = await fetch(`http://127.0.0.1:8000/user/api/details/?user_id=${user.id}`);
         
         if (response.ok) {
           const data = await response.json();
           
           setFormData({
             username: data.username || '',
-            firstName: data.first_name || '', 
+            firstName: data.first_name || '', // Note: Backend sends snake_case
             lastName: data.last_name || '',
             email: data.email || '',
             dob: data.dob || '',
@@ -67,6 +73,7 @@ function AccountSettings() {
           });
 
           if (data.avatar_url) {
+            // Assuming the backend returns a full URL or a relative path
             setAvatarPreview(data.avatar_url); 
           }
         } else {
@@ -78,10 +85,20 @@ function AccountSettings() {
     };
 
     fetchUserData();
-  }, []); // The empty [] means this runs only once when the page loads
-  // --- THE NEW CONNECTION TO PYTHON ---
+  }, []);
+
+  // --- SAVE CHANGES ---
   const handleSaveChanges = async () => {
+    const savedUser = localStorage.getItem('jubuddy_user');
+    if (!savedUser) {
+        alert("User not logged in!");
+        return;
+    }
+    const user = JSON.parse(savedUser);
+
     const dataToSend = new FormData();
+    // Add user_id so backend knows who to update
+    dataToSend.append('user_id', user.id);
 
     // Append text data
     dataToSend.append('username', formData.username);
@@ -96,7 +113,8 @@ function AccountSettings() {
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/user/api/account/update/', {
+      // Use the 'details' endpoint which handles both GET and POST for updates
+      const response = await fetch('http://127.0.0.1:8000/user/api/details/', {
         method: 'POST',
         body: dataToSend, 
       });
@@ -106,8 +124,15 @@ function AccountSettings() {
 
       if (response.ok) {
         alert('Settings saved successfully!');
+        
+        // Update local storage if critical info changed
+        user.username = formData.username;
+        user.firstName = formData.firstName;
+        user.lastName = formData.lastName;
+        localStorage.setItem('jubuddy_user', JSON.stringify(user));
+        
       } else {
-        alert('Error saving settings: ' + result.message);
+        alert('Error saving settings: ' + (result.message || result.error || 'Unknown error'));
       }
     } catch (error) {
       console.error('Error:', error);
@@ -136,7 +161,7 @@ function AccountSettings() {
       
       <div className="account-settings-content">
         <div className="account-settings-left">
-          {/* ... Avatar UI (unchanged) ... */}
+          {/* Avatar UI */}
            <div className="account-avatar" onClick={handleChangePhotoClick}>
             {avatarPreview ?  (
               <img 
@@ -168,11 +193,11 @@ function AccountSettings() {
           />
           <div className="avatar-buttons">
             <button className="change-photo-button" onClick={handleChangePhotoClick}>
-              {/* ... svg ... */} Change Photo
+              Change Photo
             </button>
             {avatarPreview && (
               <button className="remove-photo-button" onClick={handleRemovePhoto}>
-                {/* ... svg ... */} Remove
+                Remove
               </button>
             )}
           </div>
@@ -183,7 +208,6 @@ function AccountSettings() {
             <div className="form-row">
               <div className="form-field">
                 <label className="form-label">Username</label>
-                {/* UPDATED INPUT: Added name, value, onChange */}
                 <input 
                   type="text" 
                   name="username"
@@ -256,21 +280,17 @@ function AccountSettings() {
             </div>
           </div>
 
-          {/* ... Password Section (unchanged for now) ... */}
           <div className="password-section">
-             {/* ... existing password UI code ... */}
              <button 
               className="password-toggle-button"
               onClick={() => setShowPasswordSection(!showPasswordSection)}
             >
               Change Password
             </button>
-             {/* ... */}
           </div>
           
           <div className="account-settings-actions">
             <button className="cancel-button">Cancel</button>
-            {/* UPDATED BUTTON: Added onClick */}
             <button className="save-button" onClick={handleSaveChanges}>Save Changes</button>
           </div>
         </div>

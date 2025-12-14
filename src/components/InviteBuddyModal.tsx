@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BuddyInviteCard from './BuddyInviteCard';
 import './InviteBuddyModal.css';
 
@@ -7,46 +7,97 @@ interface InviteBuddyModalProps {
   onClose: () => void;
 }
 
+interface SearchResult {
+  id: number;
+  username: string;
+  first_name: string;
+  last_name: string;
+}
+
 function InviteBuddyModal({ isOpen, onClose }: InviteBuddyModalProps) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [appliedSearchTerm, setAppliedSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  // Reset state when modal closes/opens
+  useEffect(() => {
+    if (isOpen) {
+      setSearchTerm('');
+      setSearchResults([]);
+    }
+  }, [isOpen]);
+
+  // Debounced Search Logic
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(async () => {
+      if (searchTerm.trim().length < 2) {
+        setSearchResults([]);
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/buddy/api/search/?q=${encodeURIComponent(searchTerm)}`);
+        if (response.ok) {
+          const data = await response.json();
+          setSearchResults(data);
+        }
+      } catch (error) {
+        console.error("Search failed:", error);
+      } finally {
+        setLoading(false);
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
+
+  // --- FIXED HANDLE INVITE ACTION ---
+  const handleInviteUser = async (userId: number) => {
+    try {
+      // 1. Get the Current Logged-in User (Sender)
+      const savedUser = localStorage.getItem('jubuddy_user');
+      if (!savedUser) {
+          alert("You must be logged in to send invites.");
+          return;
+      }
+      const sender = JSON.parse(savedUser);
+
+      // 2. Find the Receiver's Username from the search results
+      // (The backend view expects 'username' to find the user)
+      const receiver = searchResults.find(user => user.id === userId);
+      if (!receiver) {
+          console.error("User not found in search results");
+          return;
+      }
+
+      // 3. Send the Request
+      const response = await fetch('http://127.0.0.1:8000/buddy/api/invite/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            sender_id: sender.id,       // Who is sending
+            username: receiver.username // Who is receiving
+        }),
+      });
+      
+      const result = await response.json();
+
+      if (!response.ok) {
+          // Show error if user is already a buddy or invite pending
+          alert(result.error || "Failed to send invite");
+          throw new Error(result.error);
+      }
+      
+      // Success is handled visually by the BuddyInviteCard button state
+      console.log("Invite sent successfully");
+
+    } catch (error) {
+      console.error("Invite failed:", error);
+    }
+  };
 
   if (!isOpen) return null;
-
-  const potentialBuddies = [
-    { firstName: 'John', lastName: 'Doe', username: 'johndoe' },
-    { firstName: 'Jane', lastName: 'Smith', username: 'janesmith' },
-    { firstName: 'Mike', lastName: 'Johnson', username: 'mikej' },
-    { firstName: 'Sarah', lastName: 'Wilson', username: 'sarahw' },
-    { firstName: 'David', lastName: 'Brown', username: 'davidb' },
-    { firstName: 'Emily', lastName: 'Davis', username: 'emilyd' },
-    { firstName: 'Chris', lastName: 'Miller', username: 'chrism' },
-    { firstName: 'Lisa', lastName: 'Garcia', username: 'lisag' },
-    { firstName: 'Alex', lastName: 'Rodriguez', username: 'alexr' },
-    { firstName: 'Emma', lastName: 'Martinez', username: 'emmam' },
-    { firstName: 'Ryan', lastName: 'Hernandez', username: 'ryanh' },
-    { firstName: 'Anna', lastName: 'Lopez', username: 'annal' },
-    { firstName: 'Kevin', lastName: 'Gonzalez', username: 'keving' },
-    { firstName: 'Mia', lastName: 'Wilson', username: 'miaw' },
-    { firstName: 'Tyler', lastName: 'Anderson', username: 'tylera' },
-    { firstName: 'Sophie', lastName: 'Thomas', username: 'sophiet' },
-    { firstName: 'Jacob', lastName: 'Taylor', username: 'jacobt' },
-    { firstName: 'Olivia', lastName: 'Moore', username: 'oliviam' }
-  ];
-
-  // Filter buddies based on applied search term
-  const filteredBuddies = appliedSearchTerm
-    ? potentialBuddies.filter(buddy => {
-        const fullName = `${buddy.firstName} ${buddy.lastName}`.toLowerCase();
-        const searchLower = appliedSearchTerm.toLowerCase();
-        return (
-          buddy.firstName.toLowerCase().includes(searchLower) ||
-          buddy.lastName.toLowerCase().includes(searchLower) ||
-          buddy.username.toLowerCase().includes(searchLower) ||
-          fullName.includes(searchLower)
-        );
-      })
-    : potentialBuddies;
 
   return (
     <div className="invite-buddy-modal-overlay" onClick={onClose}>
@@ -69,33 +120,44 @@ function InviteBuddyModal({ isOpen, onClose }: InviteBuddyModalProps) {
             <div className="invite-buddy-search-container">
               <input
                 type="text"
-                placeholder="search username"
+                placeholder="search username (min 2 chars)"
                 className="invite-buddy-search-input"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                autoFocus
               />
             </div>
-            <button
-              className="invite-buddy-icon-btn invite-buddy-search-icon-btn"
-              onClick={() => setAppliedSearchTerm(searchTerm)}
-            >
+            <button className="invite-buddy-icon-btn invite-buddy-search-icon-btn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
                   <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2"/>
                 </svg>
-              </button>
+            </button>
           </div>
         </div>
         
         {/* Scrollable buddies list section */}
         <div className="invite-buddy-list-section">
           <div className="invite-buddy-invite-list">
-            {filteredBuddies.map((buddy, index) => (
+            
+            {loading && <div className="invite-buddy-message">Searching...</div>}
+
+            {!loading && searchTerm.length >= 2 && searchResults.length === 0 && (
+               <div className="invite-buddy-message">No users found.</div>
+            )}
+
+            {!loading && searchTerm.length < 2 && searchResults.length === 0 && (
+               <div className="invite-buddy-message">Type a name to search...</div>
+            )}
+
+            {searchResults.map((user) => (
               <BuddyInviteCard
-                key={`invite-${index}`}
-                firstName={buddy.firstName}
-                lastName={buddy.lastName}
-                username={buddy.username}
+                key={user.id}
+                id={user.id}
+                firstName={user.first_name || 'User'}
+                lastName={user.last_name || ''}
+                username={user.username}
+                onInvite={handleInviteUser}
               />
             ))}
           </div>

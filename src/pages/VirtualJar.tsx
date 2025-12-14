@@ -20,16 +20,19 @@ function VirtualJar() {
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // --- Helpers ---
   const getSavedPins = (): number[] => {
     const saved = localStorage.getItem('jubuddy_pinned_ids');
     return saved ? JSON.parse(saved) : [];
   };
 
-  // --- API Functions ---
   const fetchItems = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/jars/api/items/');
+      const savedUser = localStorage.getItem('jubuddy_user');
+      if (!savedUser) return;
+      const user = JSON.parse(savedUser);
+
+      // UPDATED: Added user_id param
+      const response = await fetch(`http://127.0.0.1:8000/jars/api/items/?user_id=${user.id}`);
       if (response.ok) {
         const data = await response.json();
         const savedPins = getSavedPins();
@@ -50,10 +53,18 @@ function VirtualJar() {
 
   const handleSaveJarItem = async (itemData: { name: string; amount: number }) => {
     try {
+      const savedUser = localStorage.getItem('jubuddy_user');
+      if (!savedUser) return;
+      const user = JSON.parse(savedUser);
+
       const response = await fetch('http://127.0.0.1:8000/jars/api/add/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: itemData.name, cost: itemData.amount }),
+        body: JSON.stringify({ 
+            user_id: user.id, // UPDATED: Added user_id
+            name: itemData.name, 
+            cost: itemData.amount 
+        }),
       });
       if (response.ok) {
         fetchItems();
@@ -99,7 +110,6 @@ function VirtualJar() {
     }
   };
 
-  // --- Actions ---
   const openAddToJarModal = () => setIsAddToJarModalOpen(true);
   const closeAddToJarModal = () => setIsAddToJarModalOpen(false);
 
@@ -115,7 +125,6 @@ function VirtualJar() {
     setItems(items.map(item => item.id === id ? { ...item, is_pinned: !item.is_pinned } : item));
   };
 
-  // --- Filtering ---
   const searchFiltered = items.filter(item => 
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -128,8 +137,6 @@ function VirtualJar() {
       <Navigation activeItem="Item Wishlist" />
       
       <div className="virtual-jar-layout">
-        
-        {/* --- Left Panel: Pinned Items (Fixed Width like Transactions) --- */}
         <div className="left-panel">
           <h2 className="section-title">Pinned Priority</h2>
           <div className="pinned-list-container">
@@ -155,12 +162,8 @@ function VirtualJar() {
           </div>
         </div>
         
-        {/* --- Right Panel: Main Content --- */}
         <div className="right-panel">
-          
-          {/* Header Controls (Matching Transactions Header) */}
           <div className="panel-header">
-             {/* Search Bar */}
              <div className="search-container">
                 <svg className="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                    <circle cx="11" cy="11" r="8"></circle>
@@ -175,7 +178,6 @@ function VirtualJar() {
                 />
              </div>
 
-             {/* Action Buttons */}
              <div className="action-buttons">
                 <button onClick={() => setIsHistoryModalOpen(true)} className="action-btn">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -193,14 +195,12 @@ function VirtualJar() {
              </div>
           </div>
           
-          {/* Main List Area */}
           <div className="jar-section">
             <div className="jar-content-container">
               <div className="jar-grid">
                 {mainList.map((item) => (
                   <div key={item.id} className={`jar-item ${item.status}`}>
                     
-                    {/* Pin Button */}
                     <button 
                       onClick={() => togglePin(item.id)}
                       className={`pin-btn ${item.is_pinned ? 'active' : ''}`}
@@ -230,7 +230,6 @@ function VirtualJar() {
                       </div>
                     </div>
 
-                    {/* Delete Button (Correctly Placed) */}
                     <button 
                       className="delete-btn" 
                       onClick={() => handleDelete(item.id)} 
@@ -262,7 +261,6 @@ function VirtualJar() {
         onSave={handleSaveJarItem}
       />
 
-      {/* History Modal */}
       {isHistoryModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">

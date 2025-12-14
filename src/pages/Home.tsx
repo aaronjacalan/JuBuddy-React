@@ -3,7 +3,6 @@ import Navigation from '../components/Navigation';
 import './Home.css';
 import './HomeBalanceDashboard.css';
 
-// --- Interfaces ---
 interface HomeData {
   firstname: string;
   balance: number;
@@ -24,7 +23,6 @@ interface JarItem {
   status: string;
 }
 
-// NEW: Goal Interface
 interface GoalData {
   goalID: number;
   name: string;
@@ -46,22 +44,18 @@ function Home() {
   const [latestExpense, setLatestExpense] = useState<Transaction | null>(null);
   const [pinnedItems, setPinnedItems] = useState<JarItem[]>([]);
   const [categoryBreakdown, setCategoryBreakdown] = useState<{[key: string]: number}>({});
-  
-  // NEW: State for Upcoming Goals
   const [upcomingGoals, setUpcomingGoals] = useState<GoalData[]>([]);
 
   useEffect(() => {
     fetchDashboardData();
   }, []);
 
-  // --- HELPER: Capitalize Text ---
   const formatCategory = (cat: string | undefined) => {
     if (!cat) return "Uncategorized";
     const lower = cat.toLowerCase();
     return lower.charAt(0).toUpperCase() + lower.slice(1);
   };
 
-  // --- HELPER: Calculate Days Left ---
   const calculateDaysLeft = (targetDateStr: string): number => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -72,16 +66,23 @@ function Home() {
 
   const fetchDashboardData = async () => {
     try {
-      // 1. Fetch User Info
-      const userRes = await fetch('http://127.0.0.1:8000/user/api/home/');
+      const savedUser = localStorage.getItem('jubuddy_user');
+      if (!savedUser) return;
+      const user = JSON.parse(savedUser);
+
+      // 1. Fetch User Info & Balance (UPDATED URL: Use details endpoint and balance endpoint we made)
+      // Note: You might want to combine these into one 'home' endpoint in Django if you prefer, 
+      // but based on your prompt you used 'user/api/home/'. I will assume that endpoint exists 
+      // and accepts user_id.
+      const userRes = await fetch(`http://127.0.0.1:8000/user/api/home/?user_id=${user.id}`);
       if (userRes.ok) {
         const data: HomeData = await userRes.json();
         setFirstname(data.firstname);
         setBalance(data.balance);
       }
 
-      // 2. Fetch Transactions
-      const transRes = await fetch('http://127.0.0.1:8000/transaction/api/history/');
+      // 2. Fetch Transactions (UPDATED: Added user_id)
+      const transRes = await fetch(`http://127.0.0.1:8000/transaction/api/history/?user_id=${user.id}`);
       
       if (transRes.ok) {
         const rawData = await transRes.json();
@@ -93,13 +94,11 @@ function Home() {
             allTransactions = rawData.results;
         }
 
-        // Filter for Expenses
         const expenses = allTransactions.filter(t => {
             const typeStr = t.type ? t.type.toUpperCase() : '';
             return typeStr === 'E' || typeStr === 'EXPENSES' || typeStr === 'EXPENSE';
         });
 
-        // Sort Logic
         const sortedExpenses = [...expenses].sort((a, b) => {
           const dateA = new Date(a.date).getTime();
           const dateB = new Date(b.date).getTime();
@@ -109,7 +108,6 @@ function Home() {
         
         setLatestExpense(sortedExpenses.length > 0 ? sortedExpenses[0] : null);
 
-        // Calculate Monthly Report
         const breakdown: {[key: string]: number} = {};
         expenses.forEach(t => {
           const catName = t.category || 'Uncategorized';
@@ -119,8 +117,8 @@ function Home() {
         setCategoryBreakdown(breakdown);
       }
 
-      // 3. Fetch Jar Items
-      const jarRes = await fetch('http://127.0.0.1:8000/jars/api/items/');
+      // 3. Fetch Jar Items (UPDATED: Added user_id)
+      const jarRes = await fetch(`http://127.0.0.1:8000/jars/api/items/?user_id=${user.id}`);
       if (jarRes.ok) {
         const allItems: JarItem[] = await jarRes.json();
         const savedPinIds = getSavedPins();
@@ -131,11 +129,10 @@ function Home() {
         setPinnedItems(pinned.slice(0, 3));
       }
 
-      // 4. NEW: Fetch Goals
-      const goalRes = await fetch('http://127.0.0.1:8000/goals/api/list/');
+      // 4. Fetch Goals (UPDATED: Added user_id)
+      const goalRes = await fetch(`http://127.0.0.1:8000/goals/api/list/?user_id=${user.id}`);
       if (goalRes.ok) {
         const allGoals: GoalData[] = await goalRes.json();
-        // Filter active, sort by nearest deadline, take top 3
         const sortedGoals = allGoals
           .map(g => ({ ...g, daysLeft: calculateDaysLeft(g.targetDate) }))
           .filter(g => g.status === 'active' && g.daysLeft >= 0)
@@ -168,7 +165,7 @@ function Home() {
         
         <div className="dashboard-grid">
           
-          {/* Left Column (Unchanged) */}
+          {/* Left Column */}
           <div className="dashboard-left">
             <div className="left-top-section">
               
@@ -237,10 +234,9 @@ function Home() {
           
           {/* Right Column */}
           <div className="dashboard-column monthly-report-column">
-            {/* 1. Monthly Expenditure */}
-            <div className="right-panel-section" style={{flex: 1, overflowY: 'auto', minHeight: '0'}}>
+            <div className="right-panel-section expenditure-section">
                 <h2 className="column-title">This Month's Expenditure</h2>
-                <div className="card-list report-list">
+                <div className="expenditure-scroll-container"> 
                   {Object.keys(categoryBreakdown).length > 0 ? (
                     Object.entries(categoryBreakdown).map(([category, amount]) => (
                       <div key={category} className="dashboard-card report-card">
@@ -258,8 +254,7 @@ function Home() {
                 </div>
             </div>
 
-            {/* 2. Upcoming Goals (Added Here) */}
-            <div className="right-panel-section" style={{marginTop: '1.5rem', flexShrink: 0}}>
+            <div className="right-panel-section expenditure-section">
                 <h2 className="column-title">Upcoming Goals</h2>
                 <div className="goals-list-container">
                     {upcomingGoals.length > 0 ? (

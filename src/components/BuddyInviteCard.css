@@ -6,24 +6,41 @@
 }
 
 .buddy-invite-card {
-  background-color: #d9d9d9;
-  border-radius: 15px;
+  /* UPDATED: White background to match the app theme */
+  background-color: #FFFFFF;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
   padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
   gap: 1rem;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
   font-family: 'DMSans', sans-serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .buddy-invite-card:hover {
-  background-color: #c0c0c0;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e0;
 }
 
 .buddy-invite-avatar {
   width: 50px;
   height: 50px;
   flex-shrink: 0;
+  /* Updated to a gradient style similar to the main list */
+  background: linear-gradient(135deg, #06D2CA 0%, #00b8b0 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.invite-avatar-text {
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
 }
 
 .buddy-invite-info {
@@ -34,7 +51,7 @@
 }
 
 .buddy-invite-name {
-  color: #000;
+  color: #1a1a1a;
   font-size: 1rem;
   font-weight: 700;
   margin: 0;
@@ -42,7 +59,7 @@
 }
 
 .buddy-invite-username {
-  color: #666;
+  color: #718096; /* Softer gray */
   font-size: 0.875rem;
   margin: 0;
   font-family: 'DMSans', sans-serif;
@@ -50,18 +67,28 @@
 
 .invite-btn {
   padding: 0.5rem 1.5rem;
-  background-color: #d9d9d9;
+  /* UPDATED: Primary Black button */
+  background-color: #1a1a1a;
+  color: white;
   border: none;
-  border-radius: 25px;
+  border-radius: 50px;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
-  color: #000;
+  transition: all 0.2s;
   font-family: 'DMSans', sans-serif;
 }
 
 .invite-btn:hover {
-  background-color: #b0b0b0;
+  background-color: #06D2CA; /* Brand Teal on hover */
+  color: #1a1a1a;
+  transform: scale(1.05);
 }
 
+/* State for when the button is clicked */
+.invite-btn.invited {
+  background-color: #e2e8f0;
+  color: #718096;
+  cursor: default;
+  transform: none;
+}
