@@ -87,7 +87,7 @@ function VirtualJar() {
   };
 
   const handleDelete = async (id: number) => {
-    if (!window.confirm("Remove this item from the jar?")) return;
+    if (!window.confirm("Remove this item from the wishlist?")) return;
     try {
       const response = await fetch(`http://127.0.0.1:8000/jars/api/delete/${id}/`, { method: 'DELETE' });
       if (response.ok) fetchItems();

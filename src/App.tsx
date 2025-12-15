@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Transactions from './pages/Transactions';
@@ -7,6 +7,7 @@ import Goals from './pages/Goals';
 import Buddies from './pages/Buddies';
 import Settings from './pages/Settings';
 import Auth from './pages/Auth'; 
+import Landing from './pages/Landing'; 
 import './App.css';
 
 function App() {
@@ -25,26 +26,46 @@ function App() {
     localStorage.removeItem('jubuddy_user');
   };
 
-  if (!user) {
-    return <Auth onLoginSuccess={handleLogin} />;
-  }
+  const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+    if (!user) {
+      return <Navigate to="/" replace />;
+    }
+    return <>{children}</>;
+  };
 
   return (
     <div className="app-outer-container">
       <div className="app-inner-container">
         <Routes>
-          {/* UPDATED: Redirect root "/" to "/home" instead of goals */}
-          <Route path="/" element={<Navigate to="/home" replace />} />
+          {/* --- PUBLIC ROUTES --- */}
           
-          {/* ADDED: The actual Home route was missing */}
-          <Route path="/home" element={<Home />} />
+          {/* Root Route: Shows Landing if logged out */}
+          <Route 
+            path="/" 
+            element={user ? <Navigate to="/home" replace /> : <Landing />} 
+          />
           
-          <Route path="/transactions" element={<Transactions />} />
-          <Route path="/virtual-jar" element={<VirtualJar />} />
-          <Route path="/goals" element={<Goals />} />
-          <Route path="/buddies" element={<Buddies />} />
-          
-          <Route path="/settings" element={<Settings onLogout={handleLogout} />} />
+          {/* Login Route: Default to Login Mode */}
+          <Route 
+            path="/login" 
+            element={user ? <Navigate to="/home" replace /> : <Auth onLoginSuccess={handleLogin} initialMode="login" />} 
+          />
+
+          {/* ADDED: Register Route: Default to Register Mode */}
+          <Route 
+            path="/register" 
+            element={user ? <Navigate to="/home" replace /> : <Auth onLoginSuccess={handleLogin} initialMode="register" />} 
+          />
+
+          {/* --- PRIVATE ROUTES --- */}
+          <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/transactions" element={<ProtectedRoute><Transactions /></ProtectedRoute>} />
+          <Route path="/virtual-jar" element={<ProtectedRoute><VirtualJar /></ProtectedRoute>} />
+          <Route path="/goals" element={<ProtectedRoute><Goals /></ProtectedRoute>} />
+          <Route path="/buddies" element={<ProtectedRoute><Buddies /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><Settings onLogout={handleLogout} /></ProtectedRoute>} />
+
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
     </div>

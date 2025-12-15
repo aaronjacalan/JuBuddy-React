@@ -166,7 +166,7 @@ function Landing({ firstname = 'Friend' }: LandingProps) {
               intelligent budgeting, savings tools, and social accountability features.
             </p>
             <div className="hero-actions">
-              <Link to="/login" className="btn btn-primary">
+              <Link to="/register" className="btn btn-primary">
                 Start Your Journey
               </Link>
             </div>
@@ -351,45 +351,6 @@ function Landing({ firstname = 'Friend' }: LandingProps) {
           </div>
         </div>
       </section>
-
-      {/* Press Section */}
-      <section className="press-section">
-        <div className="container">
-          <h2 className="section-title">Featured in the Press</h2>
-          <p className="section-subtitle">
-            See what leading publications are saying about JuBuddy
-          </p>
-          <div className="press-grid">
-            {pressMentions.map((mention, index) => (
-              <div key={index} className="press-item">
-                <h3 className="press-outlet">{mention.outlet}</h3>
-                <p className="press-headline">{mention.headline}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section className="team-section">
-        <div className="container">
-          <h2 className="section-title">Meet Our Team</h2>
-          <p className="section-subtitle">
-            The minds behind JuBuddy's innovative financial solutions
-          </p>
-          <div className="team-grid">
-            {team.map((member, index) => (
-              <div key={index} className="team-member">
-                <div className="member-avatar">👤</div>
-                <h3 className="member-name">{member.name}</h3>
-                <p className="member-role">{member.role}</p>
-                <p className="member-experience">{member.experience}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="cta-section">
         <div className="container">
@@ -398,8 +359,7 @@ function Landing({ firstname = 'Friend' }: LandingProps) {
             Join thousands of Filipinos who are already taking control of their financial future
           </p>
           <div className="cta-actions">
-            <Link to="/login" className="btn btn-primary btn-large">
-              Start Saving Today
+            <Link to="/register" className="btn btn-primary btn-large">              Start Saving Today
             </Link>
           </div>
         </div>

@@ -51,3 +51,20 @@
   background: none; border: none; color: #06D2CA; font-weight: 700;
   cursor: pointer; margin-left: 0.5rem; text-decoration: underline;
 }
+
+.auth-back-button {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #718096;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.auth-back-button:hover {
+  color: #06D2CA;
+}

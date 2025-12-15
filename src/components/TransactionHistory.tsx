@@ -20,11 +20,9 @@ function TransactionHistory({ isOpen, onClose }: TransactionHistoryProps) {
   const [appliedSearchTerm, setAppliedSearchTerm] = useState('');
   const [filterType, setFilterType] = useState<'all' | 'expense' | 'income'>('all');
   
-  // 1. STATE: Store the list of fetched transactions
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // 2. FETCH: Get data from Django when modal opens
   useEffect(() => {
     if (isOpen) {
       fetchHistory();
@@ -34,10 +32,27 @@ function TransactionHistory({ isOpen, onClose }: TransactionHistoryProps) {
   const fetchHistory = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://127.0.0.1:8000/transaction/api/history/');
+      // 1. Get the logged-in user from LocalStorage
+      const savedUser = localStorage.getItem('jubuddy_user');
+      if (!savedUser) {
+        console.error("User not logged in");
+        setLoading(false);
+        return;
+      }
+      const user = JSON.parse(savedUser);
+
+      // 2. Append user_id to the URL
+      const response = await fetch(`http://127.0.0.1:8000/transaction/api/history/?user_id=${user.id}`);
+      
       if (response.ok) {
         const data = await response.json();
-        setTransactions(data);
+        // Ensure data is an array before setting it
+        if (Array.isArray(data)) {
+            setTransactions(data);
+        } else {
+            console.error("API returned non-array data:", data);
+            setTransactions([]);
+        }
       } else {
         console.error("Failed to fetch history");
       }
@@ -48,12 +63,10 @@ function TransactionHistory({ isOpen, onClose }: TransactionHistoryProps) {
     }
   };
 
-  // 3. FILTERING LOGIC (Applied to the fetched data)
   const filteredTransactions = transactions.filter(t => {
     const searchLower = appliedSearchTerm.toLowerCase();
     const matchesSearch = !searchLower || t.description.toLowerCase().includes(searchLower);
     
-    // Check if type matches (React uses 'income'/'expense', make sure API matches)
     const matchesFilter = filterType === 'all' || t.type === filterType;
     return matchesSearch && matchesFilter;
   });
