@@ -11,15 +11,18 @@
   background-color: #f0f2f5;
   font-family: 'DMSans', sans-serif;
   padding: 1rem;
+  box-sizing: border-box;
 }
 
 .auth-card {
   background: white;
-  padding: 2.5rem;
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
   border-radius: 20px;
   width: 100%;
   max-width: 420px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  margin: 0 auto;
+  flex-shrink: 0;
 }
 
 .auth-title { margin: 0; font-size: 2rem; font-weight: 800; color: #1a1a1a; text-align: center; }
@@ -38,7 +41,7 @@
 .input-group input:focus { border-color: #06D2CA; outline: none; }
 
 .auth-btn {
-  background: #1a1a1a; color: white; padding: 1rem;
+  background: #1a1a1a; color: white; padding: 1rem; font-family: 'DMsans';
   border: none; border-radius: 12px; font-weight: 700; font-size: 1rem;
   cursor: pointer; margin-top: 0.5rem; transition: 0.2s;
 }
@@ -46,10 +49,22 @@
 
 .auth-error { color: #c53030; background: #fff5f5; padding: 0.75rem; border-radius: 8px; text-align: center; font-size: 0.9rem; }
 
-.auth-switch { text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: #666; }
+.auth-switch {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #666;
+  font-family: 'DMSans', sans-serif;
+}
 .auth-switch button {
-  background: none; border: none; color: #06D2CA; font-weight: 700;
-  cursor: pointer; margin-left: 0.5rem; text-decoration: underline;
+  background: none;
+  border: none;
+  color: #06D2CA;
+  font-weight: 700;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  text-decoration: underline;
+  font-family: 'DMSans', sans-serif;
 }
 
 .auth-back-button {
@@ -67,4 +82,48 @@
 
 .auth-back-button:hover {
   color: #06D2CA;
+}
+
+/* Password input container and toggle button */
+.password-input-group {
+  position: relative;
+}
+
+.password-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-container input {
+  padding-right: 3rem;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  color: #666;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-toggle-btn:hover {
+  color: #06D2CA;
+  background-color: rgba(6, 210, 202, 0.1);
+}
+
+.password-toggle-btn:focus {
+  outline: 2px solid #06D2CA;
+  outline-offset: 2px;
+}
+
+.password-toggle-btn svg {
+  display: block;
 }

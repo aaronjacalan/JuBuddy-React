@@ -132,6 +132,7 @@
   border-radius: 15px;
   padding: 2rem;
   margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
 .settings-section.account-section {

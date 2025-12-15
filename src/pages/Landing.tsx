@@ -6,7 +6,7 @@ interface LandingProps {
   firstname?: string;
 }
 
-function Landing({ firstname = 'Friend' }: LandingProps) {
+function Landing({ }: LandingProps) {
   const [navStyle, setNavStyle] = useState('light');
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -73,9 +73,9 @@ function Landing({ firstname = 'Friend' }: LandingProps) {
   ];
 
   const stats = [
-    { number: "50K+", label: "Active Users", icon: "👥" },
-    { number: "₱2.5M+", label: "Total Savings", icon: "💎" },
-    { number: "95%", label: "Goal Achievement", icon: "🎯" }
+    { number: "4.9★", label: "App Rating", icon: "⭐" },
+    { number: "24/7", label: "Support Available", icon: "💬" },
+    { number: "100%", label: "Secure & Private", icon: "🔒" }
   ];
 
   return (

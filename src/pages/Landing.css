@@ -30,7 +30,6 @@ html, body {
   overflow-x: hidden;
   scroll-behavior: smooth;
   scrollbar-width: none;
-  padding-bottom: 2rem;
 }
 
 .landing-wrapper::-webkit-scrollbar {
@@ -143,18 +142,16 @@ html, body {
   justify-content: center;
   padding: 4rem;
   padding-bottom: 8rem;
-}
-
-.features-panel {
-  height: auto;
-  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 6rem;
 }
 
 .hero-panel {
   background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
   padding-top: 8rem;
   padding-bottom: 4rem;
-  position: relative;
+  position: sticky;
   overflow: hidden;
 }
 
@@ -177,15 +174,12 @@ html, body {
 
 .features-panel {
   background: linear-gradient(135deg, #E8E8E8 0%, #f5f5f5 100%);
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-  min-height: 100vh;
-  height: auto;
+  position: sticky;
 }
 
 .process-panel {
   background: linear-gradient(135deg, #06D2CA 0%, #05b8b1 100%);
-  position: relative;
+  position: sticky;
   overflow: hidden;
 }
 
@@ -204,15 +198,11 @@ html, body {
 
 .testimonial-panel {
   background: linear-gradient(135deg, #f5f5f5 0%, #E8E8E8 100%);
+  position: sticky;
 }
 
 .cta-panel {
   background: linear-gradient(135deg, #06D2CA 0%, #04a59e 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-top: 6rem;
-  padding-bottom: 4rem;
   position: relative;
   overflow: visible;
 }
@@ -237,7 +227,7 @@ html, body {
   margin-top: auto;
   margin-left: -4rem;
   margin-right: -4rem;
-  margin-bottom: -6rem;
+  margin-bottom: -8rem;
   width: calc(100% + 8rem);
   clear: both;
 }
@@ -373,7 +363,7 @@ html, body {
 .stat-item {
   text-align: left;
   padding: 1.25rem;
-  background: rgba(255, 255, 255, 0.8);
+  background: #E8E8E8;
   backdrop-filter: blur(10px);
   border-radius: 20px;
   border: 1px solid rgba(6, 210, 202, 0.1);
@@ -670,7 +660,7 @@ html, body {
   top: 40px;
   right: -2rem;
   font-size: 2rem;
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255);
   font-weight: 800;
 }
 
@@ -708,16 +698,16 @@ html, body {
 }
 
 .step-title {
-  font-size: 1.75rem;
-  font-weight: 800;
-  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 1000;
+  color: #1b1b1b;
   margin-bottom: 1rem;
 }
 
 .step-desc {
-  color: rgba(255,255,255,0.9);
+  color: rgba(0,0,0,0.75);
   line-height: 1.6;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
 }
 
 .testimonial-grid {
@@ -896,13 +886,6 @@ html, body {
   .hero-panel {
     padding-top: 8rem;
     padding-bottom: 6rem;
-  }
-
-  .features-panel {
-    padding-top: 8rem;
-    padding-bottom: 8rem;
-    height: auto;
-    min-height: auto;
   }
 
   .main-heading {

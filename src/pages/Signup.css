@@ -16,15 +16,18 @@
     justify-content: center;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     padding: 2rem;
+    box-sizing: border-box;
   }
   
   .signup-card {
     background-color: white;
-    padding: 3rem;
+    padding: 2.5rem 3rem 2rem 3rem;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 450px;
+    margin: 0 auto;
+    flex-shrink: 0;
   }
   
   .signup-header {
@@ -72,16 +75,19 @@
     padding: 1rem;
     margin: 1rem 0;
     text-align: center;
+    font-family: 'DMSans', sans-serif;
   }
   
   .temp-message p {
     margin: 0.25rem 0;
     color: #856404;
     font-size: 0.9rem;
+    font-family: 'DMSans', sans-serif;
   }
   
   .temp-message strong {
     color: #533f03;
+    font-family: 'DMSans', sans-serif;
   }
   
   .signup-form {
@@ -194,6 +200,7 @@
     margin-top: 1rem;
     padding-top: 1rem;
     border-top: 1px solid #E8E8E8;
+    font-family: 'DMSans', sans-serif;
   }
   
   .temp-direct-access .btn-secondary {
@@ -201,6 +208,7 @@
     color: #1B1B1B;
     font-weight: bold;
     font-size: 0.9rem;
+    font-family: 'DMSans', sans-serif;
   }
   
   .temp-direct-access .btn-secondary:hover {
@@ -209,8 +217,8 @@
   
   .signup-footer {
     text-align: center;
-    margin-top: 2rem;
-    padding-top: 2rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
     border-top: 1px solid #E8E8E8;
   }
   
@@ -218,6 +226,7 @@
     color: #666;
     margin: 0;
     font-size: 0.9rem;
+    font-family: 'DMSans', sans-serif;
   }
   
   .login-link {
@@ -236,14 +245,60 @@
      and remove the temporary message and direct access button above
   */
   
+  /* Password input container and toggle button */
+  .password-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .password-input-container input {
+    padding-right: 3rem;
+  }
+  
+  .password-toggle-btn {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    color: #666;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .password-toggle-btn:hover {
+    color: #06D2CA;
+    background-color: rgba(6, 210, 202, 0.1);
+  }
+  
+  .password-toggle-btn:focus {
+    outline: 2px solid #06D2CA;
+    outline-offset: 2px;
+  }
+  
+  .password-toggle-btn svg {
+    display: block;
+  }
+
   /* Responsive Design */
   @media (max-width: 480px) {
     .signup-container {
       padding: 1rem;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
     }
   
     .signup-card {
       padding: 2rem;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 400px;
     }
   
     .signup-title {
@@ -257,5 +312,12 @@
   
     .checkbox-label {
       align-items: flex-start;
+    }
+  }
+
+  /* Additional centering for very short content */
+  @media (min-height: 700px) {
+    .signup-container {
+      align-items: center;
     }
   }

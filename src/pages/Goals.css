@@ -12,7 +12,7 @@
   flex-direction: column;
   overflow: hidden;
   font-family: 'DMSans', sans-serif;
-  background-color: #fff;
+  background-color: #F5F5F5 ;
 }
 
 .goals-layout {
@@ -192,14 +192,14 @@
 
 /* --- LIST AREA --- */
 .goals-section {
-  background-color: #f8f9fa;
+  background-color: #ffffff;
   border-radius: 24px;
   flex: 1;
   display: flex;
   flex-direction: column;
   min-height: 0;
   overflow: hidden;
-  border: 1px solid #e9ecef;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
 .goals-content-container { padding: 2rem; overflow-y: auto; flex: 1; }
