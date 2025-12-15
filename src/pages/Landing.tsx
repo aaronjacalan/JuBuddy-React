@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
 import './Landing.css';
 
 interface LandingProps {
@@ -6,439 +7,250 @@ interface LandingProps {
 }
 
 function Landing({ firstname = 'Friend' }: LandingProps) {
+  const [navStyle, setNavStyle] = useState('light');
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const sections = ['hero', 'features', 'process', 'testimonial', 'cta'];
+      
+      const currentSection = Math.floor(scrollTop / windowHeight);
+      
+      if (sections[currentSection] === 'hero' || sections[currentSection] === 'features' || sections[currentSection] === 'testimonial') {
+        setNavStyle('light');
+      } else {
+        setNavStyle('dark');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const features = [
-    {
-      title: "Smart Budget Tracking",
-      description: "Track your expenses and income with intelligent categorization and insights powered by AI.",
-      icon: "💰"
+    { 
+      title: "Smart Budget Tracking", 
+      icon: "💰",
+      description: "Automatically categorize expenses and income with intelligent AI-powered tracking",
+      color: "from-emerald-400 to-teal-500"
     },
-    {
-      title: "Goal Achievement",
-      description: "Set and achieve your financial goals with our virtual jar system and progress tracking.",
-      icon: "🎯"
+    { 
+      title: "Goal Achievement", 
+      icon: "🎯",
+      description: "Visualize and achieve your dreams with our innovative virtual jar savings system",
+      color: "from-blue-400 to-cyan-500"
     },
-    {
-      title: "Buddy System",
-      description: "Share your financial journey with friends and stay motivated together with accountability partners.",
-      icon: "👥"
+    { 
+      title: "Buddy System", 
+      icon: "👥",
+      description: "Stay accountable with friends and celebrate financial milestones together",
+      color: "from-purple-400 to-pink-500"
     },
-    {
-      title: "Detailed Analytics",
-      description: "Get comprehensive reports and analytics to understand your spending patterns and optimize savings.",
-      icon: "📊"
+    { 
+      title: "Deep Analytics", 
+      icon: "📊",
+      description: "Discover spending patterns with beautiful, comprehensive financial reports",
+      color: "from-orange-400 to-red-500"
     },
-    {
-      title: "Bill Reminders",
-      description: "Never miss a payment with smart reminders and automatic bill tracking features.",
-      icon: "🔔"
+    { 
+      title: "Smart Reminders", 
+      icon: "🔔",
+      description: "Never miss a bill payment with intelligent, timely notifications",
+      color: "from-yellow-400 to-orange-500"
     },
-    {
-      title: "Investment Insights",
-      description: "Get personalized investment advice and track your portfolio performance in real-time.",
-      icon: "📈"
-    },
-    {
-      title: "Automated Savings",
-      description: "Set up automatic transfers and rules to save money without thinking about it.",
-      icon: "🤖"
-    },
-    {
-      title: "Credit Score Monitoring",
-      description: "Track your credit score and get personalized tips to improve your financial profile.",
-      icon: "📋"
+    { 
+      title: "AI Financial Coach", 
+      icon: "🤖",
+      description: "Receive personalized recommendations and insights powered by advanced AI",
+      color: "from-indigo-400 to-purple-500"
     }
   ];
 
-  const statistics = [
-    { number: "50,000+", label: "Active Users" },
-    { number: "₱2.5M+", label: "Total Savings" },
-    { number: "95%", label: "Goal Achievement Rate" },
-    { number: "₱15,000", label: "Average Savings" },
-    { number: "24/7", label: "Customer Support" },
-    { number: "99.9%", label: "Uptime Guarantee" }
-  ];
-
-  const testimonials = [
-    {
-      name: "Sarah M.",
-      text: "JuBuddy helped me save ₱50,000 in just 6 months! The buddy system keeps me accountable and motivated.",
-      rating: 5,
-      location: "Manila"
-    },
-    {
-      name: "Mike R.",
-      text: "The detailed analytics finally showed me where my money was going. I've cut expenses by 30%!",
-      rating: 5,
-      location: "Cebu"
-    },
-    {
-      name: "Lisa K.",
-      text: "Love the virtual jar system! I've reached all my savings goals faster than I ever thought possible.",
-      rating: 5,
-      location: "Davao"
-    },
-    {
-      name: "John D.",
-      text: "As a freelancer, irregular income used to stress me out. JuBuddy's smart budgeting changed everything.",
-      rating: 5,
-      location: "Quezon City"
-    },
-    {
-      name: "Maria S.",
-      text: "The investment insights helped me grow my savings by 15% this year. Highly recommended!",
-      rating: 5,
-      location: "Makati"
-    }
-  ];
-
-  const faqs = [
-    {
-      question: "Is JuBuddy free to use?",
-      answer: "Yes! JuBuddy offers a comprehensive free plan with all core features. We also have premium plans for advanced features."
-    },
-    {
-      question: "How secure is my financial data?",
-      answer: "We use bank-level 256-bit encryption and never store your banking credentials. Your data is protected with the highest security standards."
-    },
-    {
-      question: "Can I link multiple bank accounts?",
-      answer: "Absolutely! You can link multiple savings, checking, and credit card accounts from various banks across the Philippines."
-    },
-    {
-      question: "How does the buddy system work?",
-      answer: "Connect with friends to share goals, progress updates, and motivate each other. You can set privacy levels and choose what to share."
-    },
-    {
-      question: "What banks are supported?",
-      answer: "We support all major Philippine banks including BPI, BDO, Metrobank, Landbank, and many more. We're constantly adding new banks."
-    },
-    {
-      question: "Is there a mobile app?",
-      answer: "Yes! Our mobile app is available on both iOS and Android, giving you full access to your finances on the go."
-    }
-  ];
-
-  const pressMentions = [
-    { outlet: "TechCrunch", headline: "JuBuddy Raises $2M to Revolutionize Personal Finance in Southeast Asia" },
-    { outlet: "Business Mirror", headline: "Filipino Fintech Startup JuBuddy Helps Users Save Over ₱2.5 Million" },
-    { outlet: "Manila Bulletin", headline: "Local App JuBuddy Makes Budgeting Fun and Social for Filipinos" },
-    { outlet: "Philippine Star", headline: "JuBuddy: The Buddy System That Actually Helps You Save Money" }
-  ];
-
-  const team = [
-    { name: "Alex Chen", role: "CEO & Co-Founder", experience: "Former VP at PayMaya" },
-    { name: "Sarah Garcia", role: "CTO & Co-Founder", experience: "Ex-Google Senior Engineer" },
-    { name: "Mike Torres", role: "Head of Product", experience: "Former Product Manager at Coins.ph" },
-    { name: "Lisa Mendoza", role: "Head of Design", experience: "Award-winning UX Designer" }
+  const stats = [
+    { number: "50K+", label: "Active Users", icon: "👥" },
+    { number: "₱2.5M+", label: "Total Savings", icon: "💎" },
+    { number: "95%", label: "Goal Achievement", icon: "🎯" }
   ];
 
   return (
-    <div className="landing-container">
-      {/* Static Transparent Header */}
-      <header className="landing-header">
-        <div className="logo-section">
-          <Link to="/" className="logo">
-            <span className="logo-text">JuBuddy</span>
-          </Link>
-        </div>
-        
-        <div className="user-section">
-          <Link 
-            to="/login" 
-            className="auth-button"
-            aria-label="Sign in to your account"
-          >
-            Sign In
-          </Link>
-        </div>
+    <div ref={containerRef} className="landing-wrapper">
+      <header className={`nav-header ${navStyle}`}>
+        <Link to="/" className="brand">
+          <span className="brand-text">JuBuddy</span>
+        </Link>
+        <Link to="/login" className="signin-btn">Sign In</Link>
       </header>
-      
-      {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-content">
-          <div className="hero-text">
-            <h1 className="hero-title">
-              Take Control of Your 
-              <span className="hero-title-highlight"> Financial Future</span>
-            </h1>
-            <p className="hero-subtitle">
-              Join thousands of Filipinos who are achieving their financial goals with JuBuddy's 
-              intelligent budgeting, savings tools, and social accountability features.
-            </p>
-            <div className="hero-actions">
-              <Link to="/register" className="btn btn-primary">
-                Start Your Journey
-              </Link>
+
+      <div className="scroll-container">
+        <section className="hero-panel">
+          <div className="hero-grid">
+            <div className="hero-left">
+              <div className="availability">
+                <span className="status-dot"></span>
+                <span>Available Now</span>
+              </div>
+              <h1 className="main-heading">
+                Take Control of Your
+                <span className="accent-text"> Financial Future</span>
+              </h1>
+              <p className="main-description">
+                Join thousands of Filipinos achieving their financial goals with intelligent budgeting and social accountability.
+              </p>
+              <Link to="/login" className="cta-primary">Start Your Journey</Link>
+              
+              <div className="stats-row">
+                {stats.map((stat, i) => (
+                  <div key={i} className="stat-item">
+                    <div className="stat-icon">{stat.icon}</div>
+                    <div className="stat-num">{stat.number}</div>
+                    <div className="stat-label">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="hero-stats">
-              {statistics.slice(0, 3).map((stat, index) => (
-                <div key={index} className="stat">
-                  <div className="stat-number">{stat.number}</div>
-                  <div className="stat-label">{stat.label}</div>
+
+            <div className="hero-right">
+              <div className="phone-frame">
+                <div className="phone-content">
+                  <div className="app-header">JuBuddy</div>
+                  <div className="balance-card">
+                    <span className="balance-label">Current Balance</span>
+                    <span className="balance-amount">₱25,430.50</span>
+                  </div>
+                  <div className="goal-card">
+                    <span className="goal-name">Emergency Fund</span>
+                    <div className="progress-track">
+                      <div className="progress-bar" style={{width: '75%'}}></div>
+                    </div>
+                    <span className="goal-progress">₱15,000 / ₱20,000</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="features-panel">
+          <div className="panel-content">
+            <h2 className="panel-title">Why Choose JuBuddy?</h2>
+            <div className="features-grid">
+              {features.map((feature, i) => (
+                <div key={i} className="feature-box">
+                  <div className={`feature-icon-wrapper bg-gradient-to-br ${feature.color}`}>
+                    <span className="feature-icon">{feature.icon}</span>
+                  </div>
+                  <span className="feature-name">{feature.title}</span>
+                  <p className="feature-description">{feature.description}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div className="hero-visual">
-            <div className="phone-mockup">
-              <div className="phone-screen">
-                <div className="app-preview">
-                  <div className="preview-header">
-                    <div className="preview-logo">JuBuddy</div>
-                  </div>
-                  <div className="preview-content">
-                    <div className="preview-balance">
-                      <span className="preview-balance-label">Current Balance</span>
-                      <span className="preview-balance-amount">₱25,430.50</span>
-                    </div>
-                    <div className="preview-goals">
-                      <div className="preview-goal">
-                        <span>Emergency Fund</span>
-                        <div className="progress-bar">
-                          <div className="progress-fill" style={{width: '75%'}}></div>
-                        </div>
-                        <span>₱15,000 / ₱20,000</span>
-                      </div>
-                    </div>
-                  </div>
+        </section>
+
+        <section className="process-panel">
+          <div className="panel-content">
+            <h2 className="panel-title light">How It Works</h2>
+            <div className="steps-grid">
+              <div className="step-box">
+                <div className="step-num">1</div>
+                <h3 className="step-title">Create Account</h3>
+                <p className="step-desc">Sign up and set up your financial profile</p>
+              </div>
+              <div className="step-box">
+                <div className="step-num">2</div>
+                <h3 className="step-title">Connect Accounts</h3>
+                <p className="step-desc">Link your bank accounts securely</p>
+              </div>
+              <div className="step-box">
+                <div className="step-num">3</div>
+                <h3 className="step-title">Achieve Goals</h3>
+                <p className="step-desc">Track progress and grow your savings</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="testimonial-panel">
+          <div className="panel-content">
+            <h2 className="panel-title">What Users Say</h2>
+            <div className="testimonial-grid">
+              <div className="testimonial-card">
+                <div className="stars">⭐⭐⭐⭐⭐</div>
+                <p className="testimonial-text">"Helped me save ₱50,000 in 6 months!"</p>
+                <p className="testimonial-author">Sarah M.</p>
+              </div>
+              <div className="testimonial-card">
+                <div className="stars">⭐⭐⭐⭐⭐</div>
+                <p className="testimonial-text">"Cut my expenses by 30% with analytics"</p>
+                <p className="testimonial-author">Mike R.</p>
+              </div>
+              <div className="testimonial-card">
+                <div className="stars">⭐⭐⭐⭐⭐</div>
+                <p className="testimonial-text">"Love the virtual jar system!"</p>
+                <p className="testimonial-author">Lisa K.</p>
+              </div>
+              <div className="testimonial-card">
+                <div className="stars">⭐⭐⭐⭐⭐</div>
+                <p className="testimonial-text">"Best budgeting app I've ever used!"</p>
+                <p className="testimonial-author">John D.</p>
+              </div>
+              <div className="testimonial-card">
+                <div className="stars">⭐⭐⭐⭐⭐</div>
+                <p className="testimonial-text">"The buddy system keeps me motivated"</p>
+                <p className="testimonial-author">Anna T.</p>
+              </div>
+              <div className="testimonial-card">
+                <div className="stars">⭐⭐⭐⭐⭐</div>
+                <p className="testimonial-text">"Finally reached my savings goal!"</p>
+                <p className="testimonial-author">Carlos P.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="cta-panel">
+          <div className="panel-content center">
+            <h2 className="panel-title light">Ready to Start?</h2>
+            <p className="cta-text">Join thousands already taking control</p>
+            <Link to="/login" className="cta-primary large">Start Saving Today</Link>
+          </div>
+          
+          <footer className="site-footer">
+            <div className="footer-grid">
+              <div className="footer-brand">
+                <h3 className="footer-logo">JuBuddy</h3>
+                <p className="footer-tag">Your Financial Journey Buddy</p>
+              </div>
+              <div className="footer-links">
+                <div className="link-col">
+                  <h4>Product</h4>
+                  <a href="#features">Features</a>
+                  <a href="#pricing">Pricing</a>
+                </div>
+                <div className="link-col">
+                  <h4>Support</h4>
+                  <a href="#help">Help Center</a>
+                  <a href="#contact">Contact</a>
+                </div>
+                <div className="link-col">
+                  <h4>Legal</h4>
+                  <a href="#privacy">Privacy</a>
+                  <a href="#terms">Terms</a>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Statistics Section */}
-      <section className="statistics-section">
-        <div className="container">
-          <h2 className="section-title">Trusted by Thousands</h2>
-          <p className="section-subtitle">
-            Join a growing community of Filipinos taking control of their financial future
-          </p>
-          <div className="statistics-grid">
-            {statistics.map((stat, index) => (
-              <div key={index} className="statistic-card">
-                <div className="statistic-number">{stat.number}</div>
-                <div className="statistic-label">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="features-section">
-        <div className="container">
-          <h2 className="section-title">Why Choose JuBuddy?</h2>
-          <p className="section-subtitle">
-            Everything you need to take control of your finances and achieve your goals
-          </p>
-          <div className="features-grid">
-            {features.map((feature, index) => (
-              <div key={index} className="feature-card">
-                <div className="feature-icon">{feature.icon}</div>
-                <h3 className="feature-title">{feature.title}</h3>
-                <p className="feature-description">{feature.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className="how-it-works-section">
-        <div className="container">
-          <h2 className="section-title">How It Works</h2>
-          <p className="section-subtitle">
-            Get started in minutes with our simple 3-step process
-          </p>
-          <div className="steps-container">
-            <div className="step">
-              <div className="step-number">1</div>
-              <h3 className="step-title">Create Your Account</h3>
-              <p className="step-description">
-                Sign up for free and set up your financial profile with your income, expenses, and savings goals
-              </p>
+            <div className="footer-bottom">
+              <p>&copy; 2024 JuBuddy. All rights reserved.</p>
             </div>
-            <div className="step">
-              <div className="step-number">2</div>
-              <h3 className="step-title">Connect Your Accounts</h3>
-              <p className="step-description">
-                Securely link your bank accounts and credit cards for automatic transaction tracking
-              </p>
-            </div>
-            <div className="step">
-              <div className="step-number">3</div>
-              <h3 className="step-title">Achieve Your Goals</h3>
-              <p className="step-description">
-                Track your progress, stay motivated with buddies, and watch your savings grow over time
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Security Section */}
-      <section className="security-section">
-        <div className="container">
-          <h2 className="section-title">Bank-Level Security</h2>
-          <p className="section-subtitle">
-            Your financial data is protected with the highest security standards
-          </p>
-          <div className="security-grid">
-            <div className="security-item">
-              <div className="security-icon">🔒</div>
-              <h3>256-bit Encryption</h3>
-              <p>Bank-level encryption protects all your sensitive data</p>
-            </div>
-            <div className="security-item">
-              <div className="security-icon">🛡️</div>
-              <h3>Banking API Integration</h3>
-              <p>Direct secure connections to your bank - we never see your passwords</p>
-            </div>
-            <div className="security-item">
-              <div className="security-icon">👁️</div>
-              <h3>Privacy First</h3>
-              <p>Your data is yours - we never sell or share your information</p>
-            </div>
-            <div className="security-item">
-              <div className="security-icon">✅</div>
-              <h3>BSP Regulated</h3>
-              <p>Fully compliant with Bangko Sentral ng Pilipinas regulations</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="testimonials-section">
-        <div className="container">
-          <h2 className="section-title">What Our Users Say</h2>
-          <p className="section-subtitle">
-            Real stories from real people achieving their financial dreams
-          </p>
-          <div className="testimonials-grid">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="testimonial-card">
-                <div className="testimonial-rating">
-                  {Array.from({ length: testimonial.rating }).map((_, i) => (
-                    <span key={i} className="star">⭐</span>
-                  ))}
-                </div>
-                <p className="testimonial-text">"{testimonial.text}"</p>
-                <p className="testimonial-author">- {testimonial.name}</p>
-                <p className="testimonial-location">{testimonial.location}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="faq-section">
-        <div className="container">
-          <h2 className="section-title">Frequently Asked Questions</h2>
-          <p className="section-subtitle">
-            Everything you need to know about JuBuddy
-          </p>
-          <div className="faq-grid">
-            {faqs.map((faq, index) => (
-              <div key={index} className="faq-item">
-                <h3 className="faq-question">{faq.question}</h3>
-                <p className="faq-answer">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      {/* CTA Section */}
-      <section className="cta-section">
-        <div className="container">
-          <h2 className="cta-title">Ready to Start Your Financial Journey?</h2>
-          <p className="cta-subtitle">
-            Join thousands of Filipinos who are already taking control of their financial future
-          </p>
-          <div className="cta-actions">
-            <Link to="/register" className="btn btn-primary btn-large">              Start Saving Today
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Blog Preview Section */}
-      <section className="blog-section">
-        <div className="container">
-          <h2 className="section-title">Latest from Our Blog</h2>
-          <p className="section-subtitle">
-            Tips, guides, and insights to help you master your finances
-          </p>
-          <div className="blog-grid">
-            <div className="blog-item">
-              <h3>How to Build an Emergency Fund in the Philippines</h3>
-              <p>Learn the proven strategies that helped thousands of Filipinos save for unexpected expenses.</p>
-              <span className="blog-date">Dec 10, 2024</span>
-            </div>
-            <div className="blog-item">
-              <h3>Budgeting Tips for Freelancers</h3>
-              <p>Navigate irregular income with smart budgeting techniques designed for gig workers.</p>
-              <span className="blog-date">Dec 8, 2024</span>
-            </div>
-            <div className="blog-item">
-              <h3>Investment Basics for Beginners</h3>
-              <p>Start your investment journey with these fundamental concepts and practical advice.</p>
-              <span className="blog-date">Dec 5, 2024</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="landing-footer">
-        <div className="container">
-          <div className="footer-content">
-            <div className="footer-brand">
-              <h3 className="footer-logo">JuBuddy</h3>
-              <p className="footer-tagline">Your Financial Journey Buddy</p>
-            </div>
-            <div className="footer-links">
-              <div className="footer-column">
-                <h4>Product</h4>
-                <a href="#features">Features</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#security">Security</a>
-                <a href="#mobile">Mobile App</a>
-                <a href="#api">API</a>
-              </div>
-              <div className="footer-column">
-                <h4>Support</h4>
-                <a href="#help">Help Center</a>
-                <a href="#contact">Contact Us</a>
-                <a href="#faq">FAQ</a>
-                <a href="#tutorials">Tutorials</a>
-                <a href="#status">System Status</a>
-              </div>
-              <div className="footer-column">
-                <h4>Company</h4>
-                <a href="#about">About Us</a>
-                <a href="#careers">Careers</a>
-                <a href="#blog">Blog</a>
-                <a href="#press">Press</a>
-                <a href="#partners">Partners</a>
-              </div>
-              <div className="footer-column">
-                <h4>Legal</h4>
-                <a href="#privacy">Privacy Policy</a>
-                <a href="#terms">Terms of Service</a>
-                <a href="#cookies">Cookie Policy</a>
-                <a href="#compliance">Compliance</a>
-              </div>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <p>&copy; 2024 JuBuddy. All rights reserved. | Built with ❤️ for Filipinos</p>
-          </div>
-        </div>
-      </footer>
+          </footer>
+        </section>
+      </div>
     </div>
   );
 }
