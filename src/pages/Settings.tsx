@@ -20,17 +20,11 @@ function Settings({ onLogout, userId }: SettingsProps) {
   const tabs = [
     'Account',
     'Account Types',
-    'Security',
-    'Notifications',
-    'Site Settings'
   ];
 
   const sections = [
     { id: 'account', title: 'Account Settings', items: [] },
-    { id: 'account-types', title: 'Account Type Management', items: [] }, // New section
-    { id: 'security', title: 'Security Settings', items: ['Two-Factor Authentication', 'Login Activity', 'Privacy Settings', 'Session Management'] },
-    { id: 'notifications', title: 'Notification Preferences', items: ['Email Notifications', 'Push Notifications', 'SMS Alerts'] },
-    { id: 'site-settings', title: 'Site Preferences', items: ['Language Settings', 'Theme Preferences', 'Display Options'] }
+    { id: 'account-types', title: 'Account Type Management', items: [] },
   ];
 
   const scrollToSection = (index: number) => {
