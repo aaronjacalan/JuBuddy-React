@@ -19,10 +19,9 @@ function Settings({ onLogout, userId }: SettingsProps) {
 
   const tabs = [
     'Account',
-    'Account Types', // New tab
+    'Account Types',
     'Security',
     'Notifications',
-    'Connected Cards/Banks',
     'Site Settings'
   ];
 
@@ -31,7 +30,6 @@ function Settings({ onLogout, userId }: SettingsProps) {
     { id: 'account-types', title: 'Account Type Management', items: [] }, // New section
     { id: 'security', title: 'Security Settings', items: ['Two-Factor Authentication', 'Login Activity', 'Privacy Settings', 'Session Management'] },
     { id: 'notifications', title: 'Notification Preferences', items: ['Email Notifications', 'Push Notifications', 'SMS Alerts'] },
-    { id: 'connected-cards', title: 'Connected Accounts', items: ['Link Credit Card', 'Connect Bank Account', 'Manage Payment Methods'] },
     { id: 'site-settings', title: 'Site Preferences', items: ['Language Settings', 'Theme Preferences', 'Display Options'] }
   ];
 

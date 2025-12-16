@@ -17,7 +17,6 @@ function AccountSettings() {
   const [showPasswordSection, setShowPasswordSection] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // --- HANDLERS ---
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -49,7 +48,7 @@ function AccountSettings() {
     }
   };
 
-  // --- FETCH USER DATA ---
+  // fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -73,7 +72,6 @@ function AccountSettings() {
           });
 
           if (data.avatar_url) {
-            // Assuming the backend returns a full URL or a relative path
             setAvatarPreview(data.avatar_url); 
           }
         } else {
@@ -87,7 +85,6 @@ function AccountSettings() {
     fetchUserData();
   }, []);
 
-  // --- SAVE CHANGES ---
   const handleSaveChanges = async () => {
     const savedUser = localStorage.getItem('jubuddy_user');
     if (!savedUser) {
@@ -113,7 +110,7 @@ function AccountSettings() {
     }
 
     try {
-      // Use the 'details' endpoint which handles both GET and POST for updates
+      //'details' endpoint handles both GET and POST for updates
       const response = await fetch('http://127.0.0.1:8000/user/api/details/', {
         method: 'POST',
         body: dataToSend, 
@@ -278,15 +275,6 @@ function AccountSettings() {
                 />
               </div>
             </div>
-          </div>
-
-          <div className="password-section">
-             <button 
-              className="password-toggle-button"
-              onClick={() => setShowPasswordSection(!showPasswordSection)}
-            >
-              Change Password
-            </button>
           </div>
           
           <div className="account-settings-actions">
