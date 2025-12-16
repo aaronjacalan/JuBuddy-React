@@ -64,8 +64,17 @@ function App() {
           <Route path="/virtual-jar" element={<ProtectedRoute><VirtualJar /></ProtectedRoute>} />
           <Route path="/goals" element={<ProtectedRoute><Goals /></ProtectedRoute>} />
           <Route path="/buddies" element={<ProtectedRoute><Buddies /></ProtectedRoute>} />
-          <Route path="/settings" element={<ProtectedRoute><Settings onLogout={handleLogout} /></ProtectedRoute>} />
-
+          <Route
+              path="/settings"
+              element={
+                <ProtectedRoute>
+                  <Settings
+                    userId={user?.id?.toString()}
+                    onLogout={handleLogout}
+                  />
+                </ProtectedRoute>
+              }
+            />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

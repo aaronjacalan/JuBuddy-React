@@ -2,14 +2,16 @@ import { useState, useRef, useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import SettingsItem from '../components/SettingsItem';
 import AccountSettings from '../components/AccountSettings';
+import AccountTypeSettings from '../components/AccountTypeSettings';
 import LogoutModal from '../components/LogoutModal';
 import './Settings.css';
 
 interface SettingsProps {
   onLogout: () => void;
+  userId: string; // Add userId prop
 }
 
-function Settings({ onLogout }: SettingsProps) {
+function Settings({ onLogout, userId }: SettingsProps) {
   const [activeTab, setActiveTab] = useState(0);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -17,6 +19,7 @@ function Settings({ onLogout }: SettingsProps) {
 
   const tabs = [
     'Account',
+    'Account Types', // New tab
     'Security',
     'Notifications',
     'Connected Cards/Banks',
@@ -25,6 +28,7 @@ function Settings({ onLogout }: SettingsProps) {
 
   const sections = [
     { id: 'account', title: 'Account Settings', items: [] },
+    { id: 'account-types', title: 'Account Type Management', items: [] }, // New section
     { id: 'security', title: 'Security Settings', items: ['Two-Factor Authentication', 'Login Activity', 'Privacy Settings', 'Session Management'] },
     { id: 'notifications', title: 'Notification Preferences', items: ['Email Notifications', 'Push Notifications', 'SMS Alerts'] },
     { id: 'connected-cards', title: 'Connected Accounts', items: ['Link Credit Card', 'Connect Bank Account', 'Manage Payment Methods'] },
@@ -39,7 +43,7 @@ function Settings({ onLogout }: SettingsProps) {
       const sectionRect = section.getBoundingClientRect();
       const scrollTop = contentRef.current.scrollTop;
       const offset = sectionRect.top - containerRect.top + scrollTop - 20;
-      
+
       contentRef.current.scrollTo({
         top: offset,
         behavior: 'smooth'
@@ -55,10 +59,10 @@ function Settings({ onLogout }: SettingsProps) {
       const containerRect = content.getBoundingClientRect();
       const containerTop = containerRect.top;
       const viewportCenter = containerRect.height / 2;
-      
+
       let closestIndex = 0;
       let closestDistance = Infinity;
-      
+
       sectionRefs.current.forEach((section, index) => {
         if (!section) return;
         const sectionRect = section.getBoundingClientRect();
@@ -80,12 +84,12 @@ function Settings({ onLogout }: SettingsProps) {
   return (
     <div className="settings-container">
       <Navigation activeItem="Settings" />
-      
+
       <LogoutModal
         isOpen={isLogoutModalOpen}
         onClose={() => setIsLogoutModalOpen(false)}
       />
-      
+
       <div className="settings-layout">
         <aside className="settings-sidebar">
           {tabs.map((tab, index) => (
@@ -101,17 +105,26 @@ function Settings({ onLogout }: SettingsProps) {
             Logout
           </button>
         </aside>
-        
+
         <main className="settings-content" ref={contentRef}>
           {sections.map((section, sectionIndex) => (
-            <div 
-              key={section.id} 
+            <div
+              key={section.id}
               className={`settings-section ${sectionIndex === 0 ? 'account-section' : ''}`}
               ref={(el) => { sectionRefs.current[sectionIndex] = el; }}
               id={section.id}
             >
               {sectionIndex === 0 ? (
                 <AccountSettings />
+              ) : sectionIndex === 1 ? (
+                // New Account Types section
+                <>
+                  <div className="settings-section-header">
+                    <h2 className="settings-section-title">{section.title}</h2>
+                    <div className="settings-section-underline"></div>
+                  </div>
+                  <AccountTypeSettings userId={userId} />
+                </>
               ) : (
                 <>
                   <div className="settings-section-header">

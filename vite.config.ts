@@ -10,4 +10,24 @@ export default defineConfig({
       },
     }),
   ],
+  server: {
+    proxy: {
+      '/user': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      },
+      '/transaction': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      },
+      '/jars': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      },
+      '/goals': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      }
+    }
+  }
 })
